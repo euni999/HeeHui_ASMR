@@ -1,0 +1,94 @@
+plugins {
+	id 'org.springframework.boot' version '2.7.3'
+	id 'io.spring.dependency-management' version '1.0.13.RELEASE'
+	id 'java'
+}
+
+group = 'com.youtube_api'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	// https://mvnrepository.com/artifact/com.google.apis/google-api-services-mybusinessaccountmanagement
+	implementation group: 'com.google.apis', name: 'google-api-services-mybusinessaccountmanagement', version: 'v1-rev20220727-2.0.0'
+	// https://mvnrepository.com/artifact/com.google.api-client/google-api-client
+	implementation group: 'com.google.api-client', name: 'google-api-client', version: '2.0.0'
+	// https://mavenlibs.com/maven/dependency/com.google.apis/google-api-services-youtube
+	implementation 'com.google.apis:google-api-services-youtube:v3-rev20220719-2.0.0'
+	// https://mvnrepository.com/artifact/com.google.apis/google-api-services-sheets
+	implementation group: 'com.google.apis', name: 'google-api-services-sheets', version: 'v4-rev20210629-1.32.1'
+
+// https://mvnrepository.com/artifact/com.google.http-client/google-http-client-jackson2
+	implementation group: 'com.google.http-client', name: 'google-http-client-jackson2', version: '1.42.2'
+	implementation group: 'org.json', name: 'json', version: '20220320'
+	implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
+
+
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
+
+
+
+
+def frontendDir = "src/fronted"
+
+
+sourceSets {
+	main {
+		resources {
+			srcDirs = ["$frontendDir/build", "web/src/main/resources"]
+		}
+	}
+}
+
+processResources {
+	dependsOn "copyWebApp"
+}
+
+task copyWebApp(type: Copy) {
+	dependsOn "buildReact"
+	from "$frontendDir/build"
+	into "web/src/main/resources/static"
+}
+task installReact(type: Exec) {
+	workingDir "$frontendDir"
+	inputs.dir "$frontendDir"
+	group = BasePlugin.BUILD_GROUP
+	if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
+		commandLine "npm.cmd", "audit", "fix"
+		commandLine 'npm.cmd', 'install'
+	}
+	else {
+		commandLine "npm", "audit", "fix"
+		commandLine 'npm', 'install'
+	}
+}
+
+task buildReact(type: Exec) {
+	dependsOn "installReact"
+	workingDir "$frontendDir"
+	inputs.dir "$frontendDir"
+	group = BasePlugin.BUILD_GROUP
+	if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
+		commandLine "npm.cmd", "run-script", "build"
+	} else {
+		commandLine "npm", "run-script", "build"
+	}
+}
+
+task copyReactBuildFiles(type: Copy) {
+	dependsOn "buildReact"
+	from "fronted/build"
+	into "web/src/main/resources/static"
+}
