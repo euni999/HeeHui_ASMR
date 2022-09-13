@@ -41,7 +41,7 @@ tasks.named('test') {
 
 
 
-def frontendDir = "src/fronted"
+def frontendDir = "src/frontend"
 
 
 sourceSets {
@@ -89,6 +89,6 @@ task buildReact(type: Exec) {
 
 task copyReactBuildFiles(type: Copy) {
 	dependsOn "buildReact"
-	from "fronted/build"
+	from "frontend/build"
 	into "web/src/main/resources/static"
 }
