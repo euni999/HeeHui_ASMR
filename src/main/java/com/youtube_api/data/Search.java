@@ -13,9 +13,7 @@ import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.model.*;
-import com.google.gson.JsonArray;
 import com.youtube_api.model.SearchItem;
-import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -23,33 +21,19 @@ import org.springframework.stereotype.Service;
 import java.io.*;
 import java.util.*;
 
-
-/**
- * Prints a list of videos based on a search term.
- *
- * @author Jeremy Walker
- */
-
 @Service
 public class Search {
-
-    /**
-     * Global instance properties filename.
-     */
-    //private static String PROPERTIES_FILENAME = "youtube.properties";
+ //private static String PROPERTIES_FILENAME = "youtube.properties";
 
     private static Logger log = LoggerFactory.getLogger(Search.class);
     private static final HttpTransport HTTP_TRANSPORT = new NetHttpTransport();
     private static final JsonFactory JSON_FACTORY = new JacksonFactory();
-    private static final long NUMBER_OF_VIDEOS_RETURNED = 2;
+    private static final long NUMBER_OF_VIDEOS_RETURNED = 50;
     private static final String GOOGLE_YOUTUBE_URL = "https://www.youtube.com/watch?v=";
     private static final String YOUTUBE_SEARCH_FIELDS = "items(id/kind,id/videoId,snippet/title,snippet/description,snippet/channelTitle,snippet/thumbnails/default/url)";
     private static final String YOUTUBE_APIKEY = "AIzaSyCHAdXUjuGX9fznEeA6Fz6EHpABipgxN98";
 
-    /**
-     * Global instance of Youtube object to make all API requests.
-     */
-    private static YouTube youtube;
+     private static YouTube youtube;
 
     static {
         youtube = new YouTube.Builder(HTTP_TRANSPORT, JSON_FACTORY, new HttpRequestInitializer() {
@@ -70,11 +54,14 @@ public class Search {
                 YouTube.Search.List search = youtube.search().list(Collections.singletonList("id,snippet"));
 
                 String apiKey = YOUTUBE_APIKEY;
+
+                search.setOrder("viewCount");
                 search.setKey(apiKey);
                 search.setQ(queryTerm);
                 search.setType(Collections.singletonList("video"));
                 String youTubeFields = YOUTUBE_SEARCH_FIELDS;
                 search.setMaxResults(NUMBER_OF_VIDEOS_RETURNED);
+
 
                 if (youTubeFields != null && !youTubeFields.isEmpty()) {
                     search.setFields(youTubeFields);

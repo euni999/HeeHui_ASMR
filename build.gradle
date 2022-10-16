@@ -14,6 +14,8 @@ repositories {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter'
+	implementation 'org.projectlombok:lombok:1.18.22'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
 	// https://mvnrepository.com/artifact/com.google.apis/google-api-services-mybusinessaccountmanagement
@@ -28,6 +30,24 @@ dependencies {
 // https://mvnrepository.com/artifact/com.google.http-client/google-http-client-jackson2
 	implementation group: 'com.google.http-client', name: 'google-http-client-jackson2', version: '1.42.2'
 	implementation group: 'org.json', name: 'json', version: '20220320'
+
+// https://mvnrepository.com/artifact/javax.persistence/javax.persistence-api
+	implementation group: 'javax.persistence', name: 'javax.persistence-api', version: '2.2'
+// https://mvnrepository.com/artifact/com.borjaglez/springify-repository
+	implementation group: 'com.borjaglez', name: 'springify-repository', version: '0.3.3'
+
+
+	// https://mvnrepository.com/artifact/mysql/mysql-connector-java
+	implementation 'mysql:mysql-connector-java'
+	implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.30'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+	implementation'org.springframework.boot:spring-boot-starter-jdbc'
+	implementation'com.h2database:h2'
+
+	// GCP
+	implementation 'com.google.cloud.sql:mysql-socket-factory-connector-j-8:1.7.0'
+
 
 
 }

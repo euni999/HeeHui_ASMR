@@ -2,17 +2,21 @@ package com.youtube_api;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
+import static org.hibernate.tool.schema.SchemaToolingLogging.LOGGER;
 
-@ComponentScan(basePackages={"com/youtube_api/Controller"})
 @SpringBootApplication
 public class HH_ASMRApplication {
 
 	public static void main(String[] args) {
 		try {
 			SpringApplication.run(HH_ASMRApplication.class, args);
-		} catch (Exception e) {
-			e.printStackTrace();
+
+		} catch (Throwable e) {
+			if (e.getClass().getName().contains("SilentExitException")) {
+				LOGGER.debug("Spring is restarting the main thread - See spring-boot-devtools");
+			} else {
+				LOGGER.error("Application crashed!", e);
+			}
 		}
 	}
 }
