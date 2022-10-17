@@ -1,9 +1,10 @@
-package com.youtube_api.data;
+package com.backend.data;
 
 /*
     키워드 검색
  */
 
+import com.backend.model.SearchItem;
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpRequestInitializer;
@@ -13,7 +14,6 @@ import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.model.*;
-import com.youtube_api.model.SearchItem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -28,9 +28,9 @@ public class Search {
     private static Logger log = LoggerFactory.getLogger(Search.class);
     private static final HttpTransport HTTP_TRANSPORT = new NetHttpTransport();
     private static final JsonFactory JSON_FACTORY = new JacksonFactory();
-    private static final long NUMBER_OF_VIDEOS_RETURNED = 50;
+    private static final long NUMBER_OF_VIDEOS_RETURNED = 5;
     private static final String GOOGLE_YOUTUBE_URL = "https://www.youtube.com/watch?v=";
-    private static final String YOUTUBE_SEARCH_FIELDS = "items(id/kind,id/videoId,snippet/title,snippet/description,snippet/channelTitle,snippet/thumbnails/default/url)";
+    private static final String YOUTUBE_SEARCH_FIELDS = "items(id/kind,id/videoId,snippet/title,snippet/description,snippet/channelTitle,snippet/thumbnails/medium/url)";
     private static final String YOUTUBE_APIKEY = "AIzaSyCHAdXUjuGX9fznEeA6Fz6EHpABipgxN98";
 
      private static YouTube youtube;
@@ -76,10 +76,11 @@ public class Search {
                     for (SearchResult rid : searchResultList) {
                         SearchItem item = new SearchItem(
                                 GOOGLE_YOUTUBE_URL + rid.getId().getVideoId(),
+                                rid.getId().getVideoId(),
                                 rid.getSnippet().getTitle(),
                                 rid.getSnippet().getChannelTitle(),
                                 rid.getSnippet().getDescription(),
-                                rid.getSnippet().getThumbnails().getDefault().getUrl());
+                                rid.getSnippet().getThumbnails().getMedium().getUrl());
                         rvalue.add(item);
                         log.info("title : " + rid.getSnippet().getTitle());
                     }

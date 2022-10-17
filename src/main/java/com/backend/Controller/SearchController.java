@@ -1,8 +1,8 @@
-package com.youtube_api.Controller;
+package com.backend.Controller;
 
+import com.backend.model.SearchItem;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.youtube_api.data.Search;
-import com.youtube_api.model.SearchItem;
+import com.backend.data.Search;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 

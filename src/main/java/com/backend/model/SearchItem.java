@@ -1,14 +1,16 @@
-package com.youtube_api.model;
+package com.backend.model;
 
 public class SearchItem {
     private String url;
+    private String videoId;
     private String title;
     private String creator;
     private String description;
     private String thumbnail;
 
-    public SearchItem(String url, String title, String creator, String description, String thumbnail) {
+    public SearchItem(String url, String videoId, String title, String creator, String description, String thumbnail) {
         this.url = url;
+        this.videoId = videoId;
         this.title = title;
         this.creator = creator;
         this.description = description;
@@ -21,6 +23,14 @@ public class SearchItem {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public String getVideoId() {
+        return videoId;
+    }
+
+    public void setVideoId(String videoId) {
+        this.videoId = videoId;
     }
 
     public String getTitle() {

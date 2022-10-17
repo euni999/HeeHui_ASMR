@@ -1,4 +1,4 @@
-package com.youtube_api;
+package com.backend;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
