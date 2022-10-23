@@ -12,30 +12,31 @@ export const HeaderWrapper = styled.header`
     background : #b0d0eb;
     align-items: flex-start;
     flex-direction: column;
-`
+`;
 export const TopSection = styled.div`
     width : 100%;
     height : 9vh;
-`
+`;
 export const BottomSection = styled.div`
     margin-left : 10px;
   @media (max-width: 700px) {
     margin-top: 0;
   }
 
-`
+`;
 
 export const WebTitleWrapper = styled.div`
 
-`
+`;
 export const WebTitle = styled(Link)`
     font-size: 2.4rem;
-    font-weight: 600;
     color : black;
-    margin : 60px 40px;
+  margin : 1rem 2.4rem 0 2.4rem;
     cursor: pointer;
     text-decoration : none;
-    &:hover{
+  font-family: cookiebold, sans-serif;
+
+  &:hover{
         color : #525252;
         transition: all ease 0.4s 0s;
     }
@@ -44,20 +45,20 @@ export const WebTitle = styled(Link)`
   }
 
 
-`
+`;
 export const MenuWrapper = styled.div`
     display : flex;
     flex-direction : row;
     justify-content: flex-start;
     margin-top : 1rem;
-`
+`;
 
 export  const StyledNavLink = styled(NavLink)`
     display : flex;
     margin : -0.5rem 30px 1rem 2rem;
     cursor: pointer;
     font-size: 1rem;
-    font-weight: 600;
+  font-family: cookieregular,sans-serif;
     text-decoration: none;
     color : black;
     &:hover, &:focus {
@@ -75,70 +76,75 @@ export  const StyledNavLink = styled(NavLink)`
     }
 
 
-`
+`;
 
 export const SearchWrapper = styled.div`
     position : relative;
-    bottom : 2.4rem;
+    bottom : 2rem;
     left : 10rem;
     width : 30%;
-`
+`;
 
 //styled.SearchInput.attrs({ placeholder: "오늘 가장 끌리는 소리는?", placeholerTextColor : "#737373"})`
 export const SearchInput = styled.input`
     border-radius: 20px;
     border : none;
     background : #ededed;
-    height : 30px;
+    height : 28px;
     width : 302px;
+  font-size : 1rem;
+  font-family: lee, sans-serif;
     padding : 0.2rem 1rem;
     :focus{
         outline : none;
         transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
     }
 
-`
+`;
 export const PersonalWrapper = styled.div`
     justify-content: flex-end;
     display : flex;
     width : 95vw;
     margin-top : -3rem;
     padding : 0.9rem 0;
-`
+`;
 
 export const StylePersonalLink = styled(NavLink)`
-    float : right;
-    font-size: 1rem;
-    font-weight: 500;
-    text-decoration: none;
-    color : #5e5e5e;
-    cursor: pointer;
-  margin-right : -0.6rem;
-    &:hover, &:focus {
-        color : #4a4a4a;
-        transition: all ease 0.4s 0s;
-    }
-  @media (max-width: 991px) {
-    font-size : 0.8rem;
+  float: right;
+  font-size: 1rem;
+  font-weight: 500;
+  text-decoration: none;
+  font-family: cookieregular, sans-serif;
+  color: #5e5e5e;
+  cursor: pointer;
+  margin-right: -0.6rem;
+
+  &:hover, &:focus {
+    color: #333333;
+    transition: all ease 0.4s 0s;
   }
 
-`
+  @media (max-width: 991px) {
+    font-size: 0.8rem;
+  }
+
+`;
 export const IconSection = styled.div`
   float : right;
-  margin : -4rem 1rem 0 0;
-`
+  margin : -3.8rem 1rem 0 0;
+`;
 //Icon Style
 export const SearchBtn = styled(SearchIcon)`
     cursor: pointer;
     position : absolute;
     margin : 0;
-    left : 18rem;
-    top : 6px;
-    width : 1.3rem;
-    height : 1.3rem;
+    left : 19rem;
+    top : 7px;
+    width : 1.2rem;
+    height : 1.2rem;
 
 
-`
+`;
 
 export const HeartBtn = styled(HeartIcon)`
     cursor : pointer;
@@ -152,7 +158,7 @@ export const HeartBtn = styled(HeartIcon)`
 
   }
 
-`
+`;
 
 export const PageBtn = styled(PageIcon)`
     cursor : pointer;
@@ -167,7 +173,7 @@ export const PageBtn = styled(PageIcon)`
   }
 
 
-`
+`;
 
 export const UserBtn = styled(UserIcon)`
     cursor : pointer;
@@ -181,4 +187,4 @@ export const UserBtn = styled(UserIcon)`
   }
 
 
-`
+`;

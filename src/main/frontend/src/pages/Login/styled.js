@@ -1,5 +1,6 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 import {Link} from 'react-router-dom';
+import {ReactComponent as GoogleIcon} from '../../assets/icons/GoogleIcon.svg';
 
 export const Button = styled.button`
     color : ${props => props.color || "white"};
@@ -15,13 +16,20 @@ export const Button = styled.button`
     text-align: center;
     justify-content: center;
     align-items: center;
+  font-family: geonggimedium, sans-serif;
     &:hover{
         background: skyblue;
         cursor: pointer;
+      transition : all ease 0.2s 0s;
+
     }
 
-`
+`;
 
+export const GoogleBtn = styled(GoogleIcon)`
+    margin-top : 0.2rem;
+  margin-left : -0.2rem;
+`;
 export const LoginDiv = styled.div`
     background: #e3e3e3;
     justify-content: center;
@@ -29,7 +37,7 @@ export const LoginDiv = styled.div`
     display : flex;
     height: 100vh;
 
-`
+`;
 export const LoginContainer = styled.div`
     background : #f0f0f0;
     padding : 0;
@@ -45,17 +53,20 @@ export const LoginContainer = styled.div`
   //@media (max-width: 991px) {
   //  height :rem;
   //}
-`
-export const LoginTitle = styled.h1`
+`;
+export const LoginTitle = styled.p`
     color : #00415d;
     text-align : center;
     display : flex;
     justify-content: center;
-    margin-top : 2rem;
-`
+    margin : 2rem 0 1rem 0;
+  font-size : 2rem;
+  font-weight: 600;
+  font-family: cookieregular, sans-serif;
+`;
 export const LoginInput = styled.input`
     width : 15rem;
-    font-size : 1rem;
+    font-size : 1.1rem;
     margin-top : 2rem;
     display :flex;
     justify-content: center;
@@ -63,6 +74,7 @@ export const LoginInput = styled.input`
     border : none;
     border-bottom : 3px solid #575757;
     background : #f0f0f0;
+  font-family : lee, sans-serif;
     ::placeholder,
      ::-webkit-input-placeholder {
     color: #8f8f8f;
@@ -75,75 +87,79 @@ export const LoginInput = styled.input`
         transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
     }
 
-`
+`;
 
 export const LoginForm = styled.form`
-`
+`;
 
 export const StyledLink = styled(Link)`
     text-decoration : none;
-`
+`;
 
 export const LoginWrapper = styled.div`
 
-`
+`;
 export const ImgBtnContainer = styled.div`
     display : flex;
     justify-content: space-evenly;
     align-items: center;
     margin : 1rem 0 0 0;
-`
+`;
 
 export const ImgBtn = styled.button`
     border : none;
     border-radius : 5px;
-    width : 2.4rem;
-    height : 2.4rem;
+    width : 2.2rem;
+    height : 2.2rem;
     cursor : pointer;
     background : ${props => props.color || 'none'};
   &:active {
     border : none;
   }
-`
+`;
 export const LoginCheckTitle = styled.div`
     display : inline;
     color : #454545;
     font-size : 0.7rem;
     margin-left : 0.4rem;
-`
+  font-family: geonggilight, sans-serif;
+`;
 
 export const LoginCheck = styled.input`
-    margin : 1rem 0 0 0;
+    margin : 0.6rem 0 0 0;
     cursor : pointer;
 
-`
+`;
 
 export const LoginSocialTitle = styled.p`
     color : #454545;
+  font-family: cookieregular, sans-serif;
     text-align: center;
-    margin : 1.5rem 0 0 0;
-    font-weight : 500;
-`
+  font-size : 1rem;
+    margin : 1.8rem 0 0 0;
+`;
 export const LoginSubWrapper = styled.div`
     display : inline;
-`
+`;
 
 export const InfoFindLink = styled(Link)`
     display : flex;
-    font-size : 0.7rem;
+  font-family: geonggilight, sans-serif;
+
+  font-size : 0.7rem;
     cursor : pointer;
     justify-content: flex-end;
-    margin-top : -1rem;
+    margin-top : -0.8rem;
     text-decoration: none;
     color : #454545;
     :hover{
         color : #616161;
         font-weight : 600;
     }
-`
+`;
 
 export const LoginWarnSpan = styled.span`
     color : red;
     font-size : 0.8rem;
     display : ${props => props.visiblity ? "#000000":"none"};
-`
+`;

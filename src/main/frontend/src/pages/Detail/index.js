@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
     VideoTitle,
     VideoCreator,
@@ -17,48 +17,28 @@ import {
     IconWrapper,
     PageBtn,
     CommentSection,
-    FilledHeartBtn
+    FilledHeartBtn, VideoViewer
 } from './styled';
 import CommentList from "../../components/Comment/CommentList";
-import {useSetRecoilState} from "recoil";
+import {useSetRecoilState,useRecoilValue} from "recoil";
 import {commentListState} from "../../recoil/comment";
-let id = 0
-const getId = () => id++
+import axios from "axios";
+import {useLocation, useParams} from "react-router-dom";
+
+import {LoginState, UserEmailState} from "../../States/LoginStates";
+let id = 0;
+
+const getId = () => id++;
 const Detail = () => {
 
     const [isLiked, setIsLiked] = useState(false);
     const [isAdded, setIsAdded] = useState(false);
 
-    // const [nextId, setNextId] = useState(0);
     const [text, setText] = useState("");
-    // const commentList = useRecoilValue(filteredCommentListState);
     const setComments = useSetRecoilState(commentListState);
-    // const comments = useRecoilValue(commentListState);
 
-    // const [comments, setComments] = useState([]);
+    const userEmail = useRecoilValue(UserEmailState);
 
-
-    // const addComment = () => {
-    //
-    //     setComments((oldComments) => {
-    //         const id = oldComments.length
-    //             ? oldComments[oldComments.length -1].id+1
-    //             :0;
-    //
-    //         //기존 oldComments에 원소가 있으면 id + 1 없으면 id = 0
-    //         return [
-    //             ...oldComments,
-    //             {
-    //                 content: content,
-    //                 id : Math.random() * 100,
-    //                 isCompleted : fa
-    //                 // date : date.getUTCDate()
-    //             },
-    //         ];
-    //     });
-    //     setContent('');
-    //
-    // };
     const addCommentHandler = e =>{
         e.preventDefault();
 
@@ -67,33 +47,135 @@ const Detail = () => {
         } else {
             setComments(comments => comments.concat({ id: getId(), text, clicked : false}));
 
-            // setComments(commentValueList => [text, ...commentValueList]);
             setText('');
-            // addComment(content);
 
         }
     };
 
+    let params = useParams().video_id;
+    console.log(params);
+
+    const location = useLocation().state; // 추가된 부분
+
     const handleChange = e => {
         setText(e.target.value);
     };
+
+
+    const [videoURL, setVideoURL] = useState(`https://www.youtube.com/embed/`);
+
+    useEffect(()=>{
+        setVideoURL(`https://www.youtube.com/embed/${params}`);
+    });
+
+    // 페이지 정보 중복 확인
+    useEffect(() => {
+        axios.get(
+            'http://localhost:8080/detail/'+ params + '/check',
+        ).then(res => {
+            console.log("중복 확인중");
+            console.log(res);
+            if (res.data===true) {console.log("있다");}
+            else {
+                saveVideo();
+                console.log("업다");
+            }
+        });
+
+        console.log("디테일 정보 저장");
+    },[] );
+
+
+    // 페이지 정보 DB 저장
+    const saveVideo = () => {
+        const data = {
+            video_id : params,
+            url : videoURL,
+            title : location.data.title,
+            description : location.data.description,
+            creator : location.data.channelTitle,
+            thumbnail : location.data.thumbnails.medium["url"],
+        };
+        axios.post(
+            'http://localhost:8080/detail/'+ params + '/save',
+            data
+        );
+        console.log("디테일 정보 저장");
+    };
+
+    // 좋아요 했나 안했나
+    const [heart, setHeart] = useState([]);
+    useEffect(() => {
+        async function fetchData() {
+            const data = {
+                email: userEmail,
+                heart : 0
+            };
+            await axios.post(
+                'http://localhost:8080/detail/'+ params + '/liked',
+                data
+            ).then(res => {
+                setHeart(res.data);
+            });
+        }
+        fetchData();
+    }, []);
+
+    // 하트 채우고 빼기
+    const getHeart = (data) => {
+        console.log("하트 눌럿서");
+        const url = 'http://localhost:8080/detail/'+ params;
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8'
+            },
+            body: JSON.stringify(data)
+        }) .then(responseData => {
+            console.log(responseData);
+            return window.location.reload();
+        });
+    };
+
     return (
         <div>
             <TitleWrapper>
-                <VideoTitle>영상 제목</VideoTitle>
-                <VideoCreator>영상 창작자</VideoCreator>
+                <VideoTitle>{location.data.title}</VideoTitle>
+                <VideoCreator>{location.data.channelTitle}</VideoCreator>
             </TitleWrapper>
             <IconWrapper>
-                {isLiked ? <FilledHeartBtn onClick={()=>setIsLiked(!isLiked)}/> : <HeartBtn onClick={()=>setIsLiked(!isLiked)}/>}
+                {heart.heart ?
+                    <FilledHeartBtn onClick={()=> {  // 좋아요 -> 안좋아요
+                        setIsLiked(!isLiked);
+                        const data = {
+                            email: userEmail,
+                            heart : 0
+                        };
+                        getHeart(data);}
+                    }/> :
+
+                    <HeartBtn onClick={() => {  // 안좋아요 -> 좋아요
+                        setIsLiked(!isLiked);
+                        const data = {
+                            email: userEmail,
+                            heart : 1
+                        };
+                        getHeart(data);}
+                    } />
+                }
                 {/*<HeartBtn onClick={()=>setIsLiked(!isLiked)}/>*/}
                 <PageBtn isAdded={isAdded} onClick={()=>setIsAdded(!isAdded)}/>
             </IconWrapper>
             <VideoWrapper>
-                <VideoSection/>
+                <VideoViewer
+                    id="ytplayer" type="text/html" width="85%" height="630"
+                    src={videoURL}//https://www.youtube.com/embed/m0x6tUkaI3c
+                    frameBorder="0" allowFullScreen/>
+                {/*<VideoSection/>*/}
             </VideoWrapper>
             <SubWrapper>
                 <VideoSubTitle>영상 부가 설명</VideoSubTitle>
-                <VideoSub>영상 부가 설명 들어갈 자리입니다.</VideoSub>
+                <VideoSub>{location.data.description}</VideoSub>
 
             </SubWrapper>
             <hr/>

@@ -1,10 +1,13 @@
 package com.backend.Repository;
 
 import com.backend.Entity.UserEntity;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Service;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
-@Service
-public interface UserRepository extends CrudRepository<UserEntity, String> {
-
+@Repository
+public interface UserRepository extends JpaRepository<UserEntity, Integer > {
+    @Query(value = "SELECT user.user_idx from ASMR.USERS user where user.email = :userEmail", nativeQuery = true)
+    Integer findByUser_idx (@Param("userEmail") String userEmail);
 }

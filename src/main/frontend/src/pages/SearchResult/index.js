@@ -1,5 +1,4 @@
-import React, {useEffect, useState} from 'react';
-import {useParams} from 'react-router';
+import React, { useState, useEffect } from 'react';
 import {
     LayoutContainer,
     NavBar,
@@ -18,110 +17,93 @@ import {
     SideBarSearchItem,
     SideBarRecommendWrapper,
     SideBarRecommendTitle,
-    SideBarRecommendItem, BlankSpace, ViewMoreBtn
+    SideBarRecommendItem,
+    BlankSpace,
+    PromotionSection
 } from './styled';
-import {PromotionSection, PromotionSub, PromotionText, PromotionWrapper, VideoThumbnail} from "../Main/styled";
+import useFetch from '../../hooks/useYoutube';
+import { useNavigate, useParams } from 'react-router-dom';
+import ApiVideoCard from '../../components/common/ApiVideoCard';
 import axios from "axios";
+import PostVideoCard from "../../components/common/PostVideoCard";
+import {ApiState} from "../../States/VideoStates";
+import {useRecoilState} from "recoil";
 
 const SearchResult = () => {
+    let parameter = useParams().word;
+    const navigate = useNavigate();
+
+    const [videoData, setVideoData] = useRecoilState(ApiState);
+    const [page, setPage] = useState(1);
+    const [param, setParam] = useState(parameter);
+
+    const searchList = ['고구마', '붕어빵', '강유미', '순대', '붕어싸만코'];
+
+    const [searchText, setSearchText] = useState(param);
+
+    const onSearchTextClick = (search)=>{
+        setSearchText(search);
+        navigate(`/search/${search}`);
+    };
+
     const [searchData, setSearchData] = useState([]);
-    const params = useParams();
+    let searchCount = 0;
+    useEffect(() => {
+        async function fetchData() {
+            const result = await axios.get(
+                'http://localhost:8080/search?word=' + parameter
+            );
+            // json콘솔로 찍으면 [Object object]로 보여서 바꾸기~~
+            setVideoData(result.data);
+            console.warn(result.data);
+            searchCount = Object.keys(result).length;
+        }
+        fetchData();
+        console.log(videoData);
+    }, []);
 
-   useEffect(() => {
-       async function fetchData() {
-           const result = await axios.get(
-               "http://localhost:3000/product/search?word=${params.word}"
-           );
-           console.log(result.data.result);
-           setSearchData(result.data.result);
-       }
-       fetchData();
-   }, []);
+    const onSearchClick = (category) => {
+        navigate(`/category/${category}`);
+    };
     return (
-
         <LayoutContainer>
             <Result>
                 <SearchResultWrapper>
-                    <SearchResultCount>7</SearchResultCount>
+                    <SearchResultCount>{searchCount}</SearchResultCount>
                     <SearchResultText>개의 결과가 존재합니다.</SearchResultText>
                 </SearchResultWrapper>
             </Result>
             <BlankSpace/>
-                <NavBar>
-                    <NavWrapper>
-                        <RelatedSearchTitle>연관 검색어</RelatedSearchTitle>
-                        <RelatedSearchWrapper>
-                            <RelatedSearchItem>고구마</RelatedSearchItem>
-                            <RelatedSearchItem>붕어빵</RelatedSearchItem>
-                            <RelatedSearchItem>순대</RelatedSearchItem>
-                            <RelatedSearchItem>염통</RelatedSearchItem>
-                            <RelatedSearchItem>붕어싸만코</RelatedSearchItem>
-                        </RelatedSearchWrapper>
-                    </NavWrapper>
-                </NavBar>
-                <Main>
-                    <PromotionSection>
-                        <PromotionWrapper>
-                            <VideoThumbnail className='1'/>
-                            <PromotionText>We've Got Your Style</PromotionText>
-                            <PromotionSub>강유미의 미용실</PromotionSub>
-                        </PromotionWrapper>
-                        <PromotionWrapper>
-                            <VideoThumbnail className='2'/>
-                            <PromotionText>22 F/W Essential</PromotionText>
-                            <PromotionSub>추운 날씨의 군고구마</PromotionSub>
-                        </PromotionWrapper>
-                        <PromotionWrapper>
-                            <VideoThumbnail className='3'/>
-                            <PromotionText>Rising ASMR</PromotionText>
-                            <PromotionSub>떠오르는 AMSR 영상</PromotionSub>
-                        </PromotionWrapper>
-                        <PromotionWrapper>
-                            <VideoThumbnail className='4'/>
-                            <PromotionText>Rising ASMR</PromotionText>
-                            <PromotionSub>떠오르는 AMSR 영상</PromotionSub>
-                        </PromotionWrapper>
-                    </PromotionSection>
-                    <PromotionSection>
-                        <PromotionWrapper>
-                            <VideoThumbnail className='1'/>
-                            <PromotionText>We've Got Your Style</PromotionText>
-                            <PromotionSub>강유미의 미용실</PromotionSub>
-                        </PromotionWrapper>
-                        <PromotionWrapper>
-                            <VideoThumbnail className='2'/>
-                            <PromotionText>22 F/W Essential</PromotionText>
-                            <PromotionSub>추운 날씨의 군고구마</PromotionSub>
-                        </PromotionWrapper>
-                        <PromotionWrapper>
-                            <VideoThumbnail className='3'/>
-                            <PromotionText>Rising ASMR</PromotionText>
-                            <PromotionSub>떠오르는 AMSR 영상</PromotionSub>
-                        </PromotionWrapper>
-                        <PromotionWrapper>
-                            <VideoThumbnail className='4'/>
-                            <PromotionText>Rising ASMR</PromotionText>
-                            <PromotionSub>떠오르는 AMSR 영상</PromotionSub>
-                        </PromotionWrapper>
-                    </PromotionSection>
+            <NavBar>
+                <NavWrapper>
+                    <RelatedSearchTitle>연관 검색어</RelatedSearchTitle>
+                    <RelatedSearchWrapper>
+                        {searchList.map((search, idx) => (
+                            <RelatedSearchItem key={idx} onClick={()=>{onSearchTextClick(search);}}>{search}</RelatedSearchItem>
+                        ))}
+                    </RelatedSearchWrapper>
+                </NavWrapper>
+            </NavBar>
+            <Main>
+                <PromotionSection>
+                    {/*<PostVideoCard page = {2} param={param} data={videoData} count={3}/>*/}
+                    <ApiVideoCard  color={"white"} param={param}/>
+                </PromotionSection>
+            </Main>
+            <SideBar>
+                <SideBarWrapper>
+                    <SideBarSearchTitle>인기 검색어</SideBarSearchTitle>
+                    <SideBarSearchItem>해리포터</SideBarSearchItem>
+                    <SideBarSearchItem>공부</SideBarSearchItem>
+                    <SideBarSearchItem>강유미</SideBarSearchItem>
+                </SideBarWrapper>
+                <SideBarRecommendWrapper>
+                    <SideBarRecommendTitle>오늘의 키워드</SideBarRecommendTitle>
+                    <SideBarRecommendItem>졸업작품</SideBarRecommendItem>
+                    <SideBarRecommendItem>타이핑 소리</SideBarRecommendItem>
 
-                    <ViewMoreBtn>더보기</ViewMoreBtn>
-                </Main>
-                <SideBar>
-                    <SideBarWrapper>
-                        <SideBarSearchTitle>인기 검색어</SideBarSearchTitle>
-                        <SideBarSearchItem>인기 검색어</SideBarSearchItem>
-                        <SideBarSearchItem>인기</SideBarSearchItem>
-                        <SideBarSearchItem>인기 검색어</SideBarSearchItem>
-                        <SideBarSearchItem>검색어</SideBarSearchItem>
-                    </SideBarWrapper>
-                    <SideBarRecommendWrapper>
-                        <SideBarRecommendTitle>오늘의 키워드</SideBarRecommendTitle>
-                        <SideBarRecommendItem>군고구마</SideBarRecommendItem>
-                        <SideBarRecommendItem>공부</SideBarRecommendItem>
-
-                    </SideBarRecommendWrapper>
-                </SideBar>
+                </SideBarRecommendWrapper>
+            </SideBar>
 
         </LayoutContainer>
     );

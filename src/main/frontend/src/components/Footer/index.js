@@ -8,26 +8,24 @@ import {FooterStyle,
     FooterExplain,
     FooterExplainSub,
     ExplainContainer,
-    ServiceContainer
+    ServiceContainer,
 } from './styled';
 const Footer = () => {
+    function openTab() {
+        window.open('http://it.daejin.ac.kr/49.html');
+    }
+
     return (
         <FooterWrapper>
             <FooterStyle>
-                <StyledLink to="/graduate">
-                        <p>졸업작품</p>
-                </StyledLink>
-                <StyledLink to ="/student">
-                        <p>학생소개</p>
-                </StyledLink>
-                <StyledLink to ="/service">
-                    <p>서비스 소개</p>
-                </StyledLink>
+                <StyledLink to="" onClick={openTab}>졸업작품</StyledLink>
+                <StyledLink to ="/student">학생소개</StyledLink>
+                <StyledLink to ="/service">서비스 소개</StyledLink>
             </FooterStyle>
             <hr/>
             <FooterContainer>
 
-            <ServiceContainer>
+                <ServiceContainer>
                     <FooterExplain>문의사항 1555-9999</FooterExplain>
                     <FooterExplainSub>운영시간 : 평일 09:00 - 18:00</FooterExplainSub>
 

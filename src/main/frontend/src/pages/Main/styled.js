@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const HomeWrapper = styled.div`
     height : 100%;
-`
+`;
 export const ImgContainer = styled.div`
     height : 80vh;
     margin : auto;
@@ -11,36 +11,38 @@ export const ImgContainer = styled.div`
     justify-content:center;
     align-items:center;
     font-size : 4rem;
-`
+`;
 export const CategoryText = styled.p`
     display : flex;
-    margin : 0.8rem auto;
-    font-weight : 600;
+    margin : 1rem auto;
+  font-family: mabinogi, sans-serif;
     font-size : 1.2rem;
     &:hover{
         cursor: pointer;
         color : grey;
-        transition: color 0.3s;
+        transition: color 0.2s;
     }
-`
+`;
 export const CategoryContainer = styled.div`
     display: flex;
     flex-direction : column;
-`
+`;
 export const SliderTitle=styled.p`
     display: flex;
     color : #131313;
-    font-size: 2rem;
-    font-weight: 600;
+    font-size: 2.2rem;
+    font-weight: 500;
     justify-content:flex-start;
     align-items:center;
-    margin : -30px 0 0 6rem;
+    margin : -6.3rem 0 0 6rem;
+  z-index: 10;
+  font-family: tway, sans-serif;
   @media(max-width: 991px){
-    margin : -20px 0 0 4rem;
+    margin : -7rem 0 0 4rem;
     font-size: 1.8rem;
   }
 
-`
+`;
 export const SliderSubtitle = styled.p`
     color : #131313;
     display: flex;
@@ -49,164 +51,159 @@ export const SliderSubtitle = styled.p`
     align-items:center;
     text-align:center;
     margin : 10px 0 0 6rem;
-    font-weight: 600;
+  font-family: gangwonbold, sans-serif;
+
+  font-weight: 600;
   @media(max-width: 991px){
-    margin : 10px 0 0 4rem;
+    margin : 0.8rem 0 0 4rem;
     font-size: 0.9rem;
   }
-`
+`;
 
 export const SliderExplain = styled.p`
-    margin-left : 6rem;
-    cursor: pointer;
-    z-index : 5;
-    width :15%;
-    margin-top : -3rem;
-    &:focus, &:hover {
-        font-weight: 600;
-        transition : all ease 0.4s 0s;
-    }
-  @media(max-width: 991px){
-    margin : -3rem 0 0 4.1rem;
+  margin-left: 6.1rem;
+  cursor: pointer;
+  z-index: 5;
+  width: 15%;
+  margin-top: 0.7rem;
+  font-family: ridi, sans-serif;
+  color: #595959;
+
+  &:focus, &:hover {
+    transition: all ease 0.4s 0s;
+    color : black;
   }
 
-`
+  @media (max-width: 991px) {
+    margin: 0.6rem 0 0 4.1rem;
+  }
+
+`;
 
 export const SliderWrapper = styled.span`
     display : flex;
     flex-direction : column;
     z-index: 10;
-`
+`;
 export const SliderViewMore = styled.div`
-  margin-top : -4px;
-  margin-left : 6rem;
+  margin-top : 0.8rem;
+  margin-left : 6.1rem;
   color: #4d4d4d;
-  font-size : 0.9rem;
+  font-size : 0.97rem;
+  font-family: geonggilight, sans-serif;
 
   @media(max-width: 991px){
     margin : 10px 0 0 4.1rem;
   }
 
-`
+`;
 export const CategoryList = styled.div`
     display : flex;
     flex-direction : row;
     background: #f2f2f2;
-`
+  margin-top : 1.5rem;
+`;
 export const CategoryTitle = styled.p`
     display : flex;
     justify-content:center;
-  margin-top : 3rem;
+  margin-top : 5rem;
     align-items:center;
     font-size : 1.8rem;
-`
-export const PagingWrapper = styled.div`
-   display : flex;
-   justify-content: flex-end;
-  margin : 0 10rem 0 0;
-  z-index: 1;
-  @media(max-width: 991px){
-    margin-right : 5rem;
-  }
-  
+  font-family: geonggimedium, sans-serif;
+`;
 
-`
-
-export const PagingArrow = styled.h4`
-    margin : 0.9rem;
-    display : flex;
-    cursor : pointer;
-    color : #828282;
-    :hover, :focus {
-        /* font-size : 1.1rem; */
-        color : #474747;
-        transition : all 0.2s;
-    }
-`
-
-export const PagingText = styled.p`
-    display : inline;
-    color : #474747;
-    font-weight: 500;
-`
-
-export const PagingPause = styled.div`
-    cursor : pointer;
-    /* display : inline; */
-    margin : 3px -4px;
-`
-
-export const BannerWrapper = styled.div`
+export const BannerImg = styled.img`
     background: #c9c9c9;
     justify-content: center;
     display : flex;
     width : 80vw;
     height : 30vh;
     margin : 6rem auto;
-`
+  object-fit: cover;
+`;
+export const BannerTitle = styled.p`
+    color : black;
+  font-size : 1.7rem;
+  font-family: geonggimedium,sans-serif;
+`;
+export const TextWrapper= styled.div`
+  margin : -10.4rem 0 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  width : 87vw;
+
+`;
+export const BannerText = styled.p`
+  color : black;
+  display: flex;
+  font-size : 1.3rem;
+  margin-top : 0.3rem;
+  font-family: geonggimedium,sans-serif;
+
+`;
+export const BannerWrapper = styled.span`
+
+`;
 export const PromotionContainer = styled.div`
-`
-export const PromotionWrapper = styled.div`
-    text-align: center;
-    cursor : pointer;
-    margin: 0.5rem 0.2rem;
-    display:inline-block;
-`
-
-export const PromotionImg = styled.div`
-    width : 25.9vw;
-    height : 50vh;
-    display : flex;
-    margin : 0.6em 0.5rem;
-    background: #dbdbdb;
-`
-
-export const PromotionText = styled.h3`
-    
-`
-
+`;
 export const PromotionSub = styled.p`
     
-`
+`;
 
 export const PromotionSection = styled.div`
-    display : flex;
-    flex-direction: row;
-    justify-content: center;
-  margin : 0 5rem;
-    
-`
+    display : grid;
+  //grid-template-columns: repeat(auto-fill, minmax(21.4%, auto));
+  grid-template-columns: repeat(auto-fill, minmax(21.4%, auto));
 
-export const PromotionTitle = styled.h1`
+  justify-content: center;
+  @media(max-width: 991px){
+    grid-template-columns: repeat(auto-fill, minmax(43%, auto));
+
+  }
+
+`;
+
+
+export const HotSection = styled.div`
+  display : grid;
+  grid-template-columns: repeat(auto-fill, minmax(28.6%, auto));
+  justify-content: center;
+  gap : 10px 0;
+  grid-gap : 10px 0;
+  @media(max-width: 991px){
+    grid-template-columns: repeat(auto-fill, minmax(55%, auto));
+
+  }
+
+
+`;
+export const PromotionTitle = styled.p`
     display : flex;
+  font-size: 2rem;
     justify-content: center;
     align-items: center;
     margin : 7rem 0 3rem 0;
-    background : ${props => props.color || 'white'};
-`
+  font-family: geonggimedium, sans-serif;
+
+  background : ${props => props.color || 'white'};
+`;
 export const VideoWrapper = styled.div`
-`
+`;
 
 export const VideoTitle = styled.h1`
-`
+`;
 
 export const VideoContainer = styled.div`
-`
+`;
 
 export const VideoCreator = styled.h3`
-`
+`;
 
 export const VideoCategory = styled.h4`
-`
-export const VideoThumbnail = styled.div`
-    width : 19vw;
-    height : 40vh;
-    display : flex;
-    margin : 0.6em 0.5rem;
-    background: #dbdbdb;
-`
+`;
 export const VideoText = styled.p`
-`
+`;
 
 export const ViewMoreBtn = styled.div`
     width : 12vw;
@@ -218,62 +215,87 @@ export const ViewMoreBtn = styled.div`
     background: #e6e6e6;
     justify-content: center;
     align-items: center;
-`
+    text-decoration : none;
+  &:hover{
+    background : #737373;
+    transition: all 0.2s ease-in-out;
+
+  }
+
+`;
 export const ViewMoreBtnText = styled.p`
-`
+  color : black;
+  font-family: lee, sans-serif;
+  font-size: 1.1rem;
+  &:hover {
+    color: white;
+    transition: all 0.2s ease-in-out;
+  }
+
+`;
 
 export const MakerSection = styled.div`
     background : #757575;
     padding : 0.1rem;
-`
+`;
 
-export const MakerImg = styled.div`
-    background: #dbdbdb;
-    width : 30vw;
+export const MakerImg = styled.img`
+    width : 35vw;
     height : 80vh;
-    margin : 3rem 12rem;
-    
-`
+    margin : 0 11rem 4rem 11rem;
+  object-fit: cover;
 
-export const MakerSubImg = styled.div`
-    background: ${props => props.color || '#dbdbdb'};
+`;
+
+export const MakerSubImg = styled.img`
     width : 15vw;
     height : 50vh;
     margin : 5rem 0.3rem;
-`
+  object-fit: cover;
+
+`;
 
 export const MakerImgContainer = styled.div`
     display : flex;
     align-items : center;
     justify-content : center;
-`
+`;
 
 
 export const CategoryBtnContainer = styled.div`
     display : flex;
     justify-content : center;
-`
+  margin-top : 3rem;
+`;
 export const CategoryBtn = styled.button`
     width : 5rem;
     cursor : pointer;
     border-radius : 2rem;
     border : solid 3px #b9babd;
     color : #131313;
-    font-weight : 600;
-    font-size : 1.1rem;
+    font-size : 1rem;
     padding : 6px;
     margin : 0 1rem 2rem 1rem;
-`
+  font-family: mabinogi,sans-serif;
+  &:hover {
+    background: #b9babd;
+    transition: all 0.2s ease-in-out;
+
+  }
+`;
 
 
 export const CollectionSection = styled.div`
     display : flex;
     justify-content : center;
-`
+  margin-top : 2rem;
+`;
 
-export const CollectionImg = styled.div`
-    width : 35vw;
-    height : 65vh;
-    margin : 1rem 0 10rem 0;
-    background : ${props => props.color || "#b9babd"};
-`
+export const CollectionImg = styled.img`
+  width: 35vw;
+  height: 65vh;
+  margin: 1rem 0 10rem 0;
+  object-fit: cover;
+
+  background: #babed0;
+`;

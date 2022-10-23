@@ -1,10 +1,10 @@
-package com.backend.data;
+package com.backend.Service;
 
 /*
     키워드 검색
  */
 
-import com.backend.model.SearchItem;
+import com.backend.Dto.VideoDto;
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpRequestInitializer;
@@ -28,10 +28,10 @@ public class Search {
     private static Logger log = LoggerFactory.getLogger(Search.class);
     private static final HttpTransport HTTP_TRANSPORT = new NetHttpTransport();
     private static final JsonFactory JSON_FACTORY = new JacksonFactory();
-    private static final long NUMBER_OF_VIDEOS_RETURNED = 5;
+    private static final long NUMBER_OF_VIDEOS_RETURNED = 2;
     private static final String GOOGLE_YOUTUBE_URL = "https://www.youtube.com/watch?v=";
     private static final String YOUTUBE_SEARCH_FIELDS = "items(id/kind,id/videoId,snippet/title,snippet/description,snippet/channelTitle,snippet/thumbnails/medium/url)";
-    private static final String YOUTUBE_APIKEY = "AIzaSyCHAdXUjuGX9fznEeA6Fz6EHpABipgxN98";
+    private static final String YOUTUBE_APIKEY = "AIzaSyD0DQJxkhFey38GgXaOAw6p8nZk7KIYf4E";
 
      private static YouTube youtube;
 
@@ -43,10 +43,10 @@ public class Search {
     }
 
     // 추가
-    public static List<SearchItem> youTubeSearch(String searchQuery, int maxSearch) {
+    public static List<VideoDto> youTubeSearch(String searchQuery, int maxSearch) {
         String queryTerm = searchQuery + " +ASMR";
-        log.info("Starting YouTube search... " +queryTerm);
-        List<SearchItem> rvalue = new ArrayList<SearchItem>();
+        log.info("검색결과 " +queryTerm);
+        List<VideoDto> rvalue = new ArrayList<VideoDto>();
 
         try {
             if (youtube != null) {
@@ -61,6 +61,7 @@ public class Search {
                 search.setType(Collections.singletonList("video"));
                 String youTubeFields = YOUTUBE_SEARCH_FIELDS;
                 search.setMaxResults(NUMBER_OF_VIDEOS_RETURNED);
+                Integer cnt = 0;
 
 
                 if (youTubeFields != null && !youTubeFields.isEmpty()) {
@@ -74,7 +75,9 @@ public class Search {
 
                 if (searchResultList != null) {
                     for (SearchResult rid : searchResultList) {
-                        SearchItem item = new SearchItem(
+                        VideoDto item = new VideoDto(
+                                cnt++,
+                                searchQuery,
                                 GOOGLE_YOUTUBE_URL + rid.getId().getVideoId(),
                                 rid.getId().getVideoId(),
                                 rid.getSnippet().getTitle(),
