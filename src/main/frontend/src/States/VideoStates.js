@@ -8,8 +8,13 @@ export const VideoState = atom({
     effects_UNSTABLE : [persistAtom],
 });
 
-export const ApiState = atom({
-    key : 'ApiState',
+export const VideoCountState = atom({
+    key : 'VideoCountState',
+    default : 0,
+    effects_UNSTABLE : [persistAtom],
+});
+export const SearchVideoState = atom({
+    key : 'SearchVideoState',
     default : [],
     effects_UNSTABLE : [persistAtom],
 });

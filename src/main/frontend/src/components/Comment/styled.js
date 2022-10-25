@@ -16,11 +16,12 @@ export const CommentItemStyle = styled.div`
   background: antiquewhite;
   border-radius: 0.7rem;
   height : 100%;
+  min-height : 2.8rem;
   
 
 `;
 
-export const CommentUser = styled.span`
+export const CommentUser = styled.div`
   font-weight : 600;
   font-size : 1.2rem;
   margin-left : 1rem;
@@ -36,7 +37,7 @@ export const CommentIconWrapper = styled.div`
 
   ${({ isEdit }) =>
         isEdit &&
-        css`
+    css`
           margin : -2.7rem 1rem 0 0;
     `}
 `;

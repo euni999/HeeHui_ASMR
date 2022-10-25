@@ -1,8 +1,8 @@
-package com.backend.Controller;
+package com.backend.controller;
 
-import com.backend.Dto.VideoDto;
+import com.backend.dto.VideoDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.backend.Service.Search;
+import com.backend.service.Search;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;

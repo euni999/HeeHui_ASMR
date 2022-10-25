@@ -1,7 +1,7 @@
-package com.backend.Dto;
+package com.backend.dto;
 
-import com.backend.Entity.UserEntity;
-import com.backend.Entity.Video;
+import com.backend.entity.UserEntity;
+import com.backend.entity.Video;
 import lombok.*;
 
 import java.sql.Timestamp;
@@ -12,7 +12,7 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 public class HeartDto {
     private UserEntity user_idx;
-    private Video video_id;
+    private Video video_idx;
     private boolean isLiked;
     private Timestamp date;
 }

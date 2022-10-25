@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { PromotionChannel, PromotionTitle, PromotionWrapper, StyledLink, VideoThumbnail, VideoWrapper } from '../PostVideoCard/styled';
 import Loading from '../../../Utils/Spinner';
+import { useSetRecoilState } from 'recoil';
+import { VideoCountState } from '../../../States/VideoStates';
 import axios from 'axios';
 
 const ApiVideoCard = ({page, order, param, count, data, color}) => {
 
+    const setVideoCount = useSetRecoilState(VideoCountState);
     const [isLoading, setIsLoading] = useState(true);
     const [hasMore, setHasMore] = useState(true);
     const [videoList, setVideoList] = useState([]);
@@ -82,8 +85,8 @@ const ApiVideoCard = ({page, order, param, count, data, color}) => {
 
     useEffect(()=>{
         setIsLoading(false);
+        setVideoCount(showVideo.length);
     }, [showVideo]);
-
     return (
         <>
             {isLoading ? <Loading /> : null}

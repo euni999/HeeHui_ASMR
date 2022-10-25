@@ -5,7 +5,6 @@ import {
     TitleWrapper,
     VideoSub,
     VideoWrapper,
-    VideoSection,
     CommentContainer,
     CommentInputWrapper,
     CommentTitle,
@@ -15,29 +14,115 @@ import {
     VideoSubTitle,
     HeartBtn,
     IconWrapper,
-    PageBtn,
     CommentSection,
-    FilledHeartBtn, VideoViewer
+    FilledHeartBtn, VideoViewer,
+    LayoutContainer
 } from './styled';
 import CommentList from "../../components/Comment/CommentList";
-import {useSetRecoilState,useRecoilValue} from "recoil";
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import {commentListState} from "../../recoil/comment";
 import axios from "axios";
 import {useLocation, useParams} from "react-router-dom";
-
 import {LoginState, UserEmailState} from "../../States/LoginStates";
+// import {response} from "express";
 let id = 0;
 
 const getId = () => id++;
 const Detail = () => {
 
+    const video_id = useParams().video_id;
     const [isLiked, setIsLiked] = useState(false);
     const [isAdded, setIsAdded] = useState(false);
 
     const [text, setText] = useState("");
     const setComments = useSetRecoilState(commentListState);
-
+    const comments = useRecoilValue(commentListState);
+    const isLoggedIn = useRecoilValue(LoginState);
     const userEmail = useRecoilValue(UserEmailState);
+
+    const [comment, setComment] = useState({});
+
+    const getCommentList = () => {
+
+        // axios.post("http://localhost:8080/getcomment/" + video_id, {})
+        //     .then((res) => {
+        //         const { data } = res;
+        //         setComments(data);
+        //         console.log(data);
+        //     })
+        //     .catch((e) => {
+        //         console.error(e);
+        //     });
+
+        console.log("댓글 돌아감");
+        fetch("http://localhost:8080/getcomment/" + video_id, {
+            method: "post"
+        })
+            .then(response => response.json())
+        //     .then((res) => {
+        //     console.log("넘어옴");
+        //     data2 = res;
+        //     setComments(data);
+        //     setTimeout(() => console.log(res), 2000);
+        //     console.log(data);
+        //     console.log(res.json());
+        // })
+            .then(res => {
+                console.log(res);
+                //const data = {...res};
+                // console.log(data.map(asdf => {asdf.title = ))
+                // res.map(idx, user, com =>{
+                //     "idx" : idx,
+                //         "user" : user,
+                //         "com" : com,
+                // });
+                setComments(res);
+                console.log(comments);
+            });
+
+    };
+    setTimeout(() => console.log(comments), 2000);
+
+    // 댓글달기
+    const addComment = () => {
+        // const now_date = new Date().toISOString().slice(0, 19).replace('T', ' ');
+
+        const dataset = {
+            comment : text,
+            video_id : video_id,
+            email : userEmail,
+        };
+        fetch("http://localhost:8080/addcomment", {
+            method : "post",
+            headers : {
+                "content-type": "application/json",
+            },
+            body : JSON.stringify(dataset),
+        })
+
+            .then((res) => {
+                console.log(res);
+                // return window.location.reload();
+            })
+            .catch((e) => {
+                console.error(e);
+            });
+    };
+
+    useEffect(()=>{
+        getCommentList();
+        setVideoURL(`https://www.youtube.com/embed/${params}`);
+
+        // 페이지 정보 중복 확인
+
+        axios.get(
+            'http://localhost:8080/detail/'+ params + '/check',
+        ).then(res => {
+            if (res.data===false) {
+                saveVideo();
+            }
+        });
+    }, []);
 
     const addCommentHandler = e =>{
         e.preventDefault();
@@ -47,15 +132,16 @@ const Detail = () => {
         } else {
             setComments(comments => comments.concat({ id: getId(), text, clicked : false}));
 
+            addComment();
             setText('');
 
         }
     };
+    const isLogged = useRecoilValue(LoginState);
 
     let params = useParams().video_id;
-    console.log(params);
 
-    const location = useLocation().state; // 추가된 부분
+    const location = useLocation().state;
 
     const handleChange = e => {
         setText(e.target.value);
@@ -65,31 +151,14 @@ const Detail = () => {
     const [videoURL, setVideoURL] = useState(`https://www.youtube.com/embed/`);
 
     useEffect(()=>{
-        setVideoURL(`https://www.youtube.com/embed/${params}`);
     });
 
-    // 페이지 정보 중복 확인
-    useEffect(() => {
-        axios.get(
-            'http://localhost:8080/detail/'+ params + '/check',
-        ).then(res => {
-            console.log("중복 확인중");
-            console.log(res);
-            if (res.data===true) {console.log("있다");}
-            else {
-                saveVideo();
-                console.log("업다");
-            }
-        });
-
-        console.log("디테일 정보 저장");
-    },[] );
 
 
     // 페이지 정보 DB 저장
     const saveVideo = () => {
         const data = {
-            video_id : params,
+            video_id : video_id,
             url : videoURL,
             title : location.data.title,
             description : location.data.description,
@@ -100,7 +169,6 @@ const Detail = () => {
             'http://localhost:8080/detail/'+ params + '/save',
             data
         );
-        console.log("디테일 정보 저장");
     };
 
     // 좋아요 했나 안했나
@@ -121,9 +189,8 @@ const Detail = () => {
         fetchData();
     }, []);
 
-    // 하트 채우고 빼기
+    // 하트 클릭
     const getHeart = (data) => {
-        console.log("하트 눌럿서");
         const url = 'http://localhost:8080/detail/'+ params;
         fetch(url, {
             method: 'POST',
@@ -131,84 +198,68 @@ const Detail = () => {
                 'Content-Type': 'application/json; charset=utf-8'
             },
             body: JSON.stringify(data)
-        }) .then(responseData => {
-            console.log(responseData);
+        }) .then(() => {
             return window.location.reload();
         });
     };
 
     return (
-        <div>
+        <LayoutContainer>
             <TitleWrapper>
                 <VideoTitle>{location.data.title}</VideoTitle>
                 <VideoCreator>{location.data.channelTitle}</VideoCreator>
             </TitleWrapper>
-            <IconWrapper>
-                {heart.heart ?
-                    <FilledHeartBtn onClick={()=> {  // 좋아요 -> 안좋아요
-                        setIsLiked(!isLiked);
-                        const data = {
-                            email: userEmail,
-                            heart : 0
-                        };
-                        getHeart(data);}
-                    }/> :
+            {isLoggedIn ? (
+                <IconWrapper>
+                    {heart.heart ?
+                        <FilledHeartBtn onClick={()=> {  // 좋아요 -> 안좋아요
+                            setIsLiked(!isLiked);
+                            const data = {
+                                email: userEmail,
+                                heart : 0
+                            };
+                            getHeart(data);}
+                        }/> :
 
-                    <HeartBtn onClick={() => {  // 안좋아요 -> 좋아요
-                        setIsLiked(!isLiked);
-                        const data = {
-                            email: userEmail,
-                            heart : 1
-                        };
-                        getHeart(data);}
-                    } />
-                }
-                {/*<HeartBtn onClick={()=>setIsLiked(!isLiked)}/>*/}
-                <PageBtn isAdded={isAdded} onClick={()=>setIsAdded(!isAdded)}/>
-            </IconWrapper>
+                        <HeartBtn onClick={() => {  // 안좋아요 -> 좋아요
+                            setIsLiked(!isLiked);
+                            const data = {
+                                email: userEmail,
+                                heart : 1
+                            };
+                            getHeart(data);}
+                        } />
+                    }
+                </IconWrapper>
+            ) : null }
             <VideoWrapper>
-                <VideoViewer
-                    id="ytplayer" type="text/html" width="85%" height="630"
-                    src={videoURL}//https://www.youtube.com/embed/m0x6tUkaI3c
+                <VideoViewer id="ytplayer" type="text/html" width="85%" height="630" src={videoURL}
                     frameBorder="0" allowFullScreen/>
-                {/*<VideoSection/>*/}
             </VideoWrapper>
             <SubWrapper>
                 <VideoSubTitle>영상 부가 설명</VideoSubTitle>
                 <VideoSub>{location.data.description}</VideoSub>
-
             </SubWrapper>
             <hr/>
-            <CommentContainer>
-                <CommentTitle>의견 나눔장</CommentTitle>
+
+            {isLogged ? (
                 <CommentInputWrapper>
                     <form onSubmit={addCommentHandler}>
                         <CommentInput type={"text"} value={text} placeholder={"댓글 달기..."} onChange={handleChange}/>
                         <CommentBtn onClick={addCommentHandler}>SEND</CommentBtn>
                     </form>
                 </CommentInputWrapper>
+            ) : null}
+            <CommentContainer>
+                <CommentTitle>의견 나눔장</CommentTitle>
+
                 <CommentSection>
-                    <CommentList/>
-
-                    {/*{comments.map((comment) => (*/}
-                    {/*    <CommentWrapper key={comment.id}>*/}
-                    {/*        <CommentCard {...comment} />*/}
-                    {/*    </CommentWrapper>*/}
-                    {/*))}*/}
-
-                    {/*<CommentListStats />  // 상태값을 보여줄 컴포넌트*/}
-                    {/*<CommentListFiters />  // 필터할 컴포넌트*/}
-                    {/*<CommentItemCreator />*/}
-
-                    {/*{commentList.map((commentItem) => (*/}
-                    {/*    <CommentItem key={commentItem.id} item={commentItem} />*/}
-                    {/*))}*/}
+                    <CommentList video_id = {video_id}/>
                 </CommentSection>
 
             </CommentContainer>
 
-
-        </div>
+        </LayoutContainer>
     );
 };
 

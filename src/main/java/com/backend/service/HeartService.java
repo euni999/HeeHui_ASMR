@@ -1,20 +1,18 @@
-package com.backend.Service;
+package com.backend.service;
 
-import com.backend.Entity.Heart;
-import com.backend.Entity.UserEntity;
-import com.backend.Entity.Video;
-import com.backend.Repository.HeartRepository;
-import com.backend.Repository.UserRepository;
-import com.backend.Repository.VideoRepository;
+import com.backend.entity.Heart;
+import com.backend.entity.UserEntity;
+import com.backend.entity.Video;
+import com.backend.repository.HeartRepository;
+import com.backend.repository.UserRepository;
+import com.backend.repository.VideoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Service
 public class HeartService {
-
     @Autowired
     private HeartRepository heartRepository;
     @Autowired
@@ -50,5 +48,7 @@ public class HeartService {
         return "DROP HEART";
     }
 
-
+    public boolean exists(Integer user_idx, String video_id) {
+        return heartRepository.existsLike(user_idx, video_id);
+    }
 }

@@ -1,6 +1,6 @@
-package com.backend.Repository;
+package com.backend.repository;
 
-import com.backend.Entity.Video;
+import com.backend.entity.Video;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

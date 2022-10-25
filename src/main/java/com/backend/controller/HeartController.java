@@ -1,22 +1,17 @@
-package com.backend.Controller;
+package com.backend.controller;
 
-import com.backend.Entity.UserEntity;
-import com.backend.Entity.Video;
-import com.backend.Repository.HeartRepository;
-import com.backend.Repository.UserRepository;
-import com.backend.Repository.VideoRepository;
-import com.backend.Service.HeartService;
+import com.backend.entity.Video;
+import com.backend.service.HeartService;
+import com.backend.service.UserService;
+import com.backend.service.VideoService;
 import com.backend.data.UserEmail;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @RestController
@@ -24,12 +19,9 @@ public class HeartController {
     @Autowired
     private HeartService heartService;
     @Autowired
-    private HeartRepository heartRepository;
+    private UserService userService;
     @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private VideoRepository videoRepository;
-
+    private VideoService videoService;
 
     // 비디오 좋아요 추가, 삭제 기능
     @CrossOrigin("http://localhost:3000")
@@ -38,8 +30,8 @@ public class HeartController {
                             @PathVariable("video_id") String video_id) {
         String email = userEmail.getEmail();
         System.out.println(userEmail);
-        Integer user_idx = userRepository.findByUser_idx(email);
-        Integer video_idx = videoRepository.findByVideo_idx(video_id);
+        Integer user_idx = userService.userIdx(email);
+        Integer video_idx = videoService.videoIdx(video_id);
         System.out.println("heart : " + userEmail.getHeart());
         if (userEmail.getHeart()) {
             System.out.println("좋아요 누름");
@@ -49,7 +41,6 @@ public class HeartController {
             System.out.println("좋아요 취소");
             heartService.dropHeart(user_idx, video_idx);
         }
-
         return "heartController";
     }
 
@@ -59,18 +50,11 @@ public class HeartController {
     public String existHeart(@RequestBody UserEmail userEmail
             , @PathVariable String video_id) throws JsonProcessingException {
         System.out.println("좋아요 확인 작업");
-        Integer user_idx = userRepository.findByUser_idx(userEmail.getEmail());
-        boolean isHeart = heartRepository.existLike(user_idx, video_id);
-        System.out.println("좋아요 상태 : " + isHeart);
+        Integer user_idx = userService.userIdx(userEmail.getEmail());
+        boolean isHeart = heartService.exists(user_idx, video_id);
         // 좋아요 상태 변경
         userEmail.setHeart(isHeart);
-        // Json Parsing
-//        ObjectMapper mapper = new ObjectMapper();
-//        String json = mapper.writeValueAsString(userEmail);
-//        System.out.println(json);
-//        return json;
         String result = makeJson(userEmail);
-        System.out.println("result : " + result);
         return result;
     }
 
@@ -78,15 +62,9 @@ public class HeartController {
     @CrossOrigin("http://localhost:3000")
     @PostMapping(value={"/favorite"})
     public String heartList (@RequestBody UserEmail email) throws JsonProcessingException {
-        System.out.println("email : " + email.getEmail());
-        Integer user_idx = userRepository.findByUser_idx(email.getEmail());
-        List<Video> videoList =  videoRepository.findByVideo(user_idx);
-        System.out.println("좋아요 개수 : " +videoList.size());
-        // JSON으로 바꾸어 전달
+        Integer user_idx = userService.userIdx(email.getEmail());
+        List<Video> videoList =  videoService.videoData(user_idx);
         String result = makeJson(videoList);
-//        ObjectMapper mapper = new ObjectMapper();
-//        String result = mapper.writeValueAsString(videoList);
-        System.out.println("result : " + result);
         return result;
 
     }

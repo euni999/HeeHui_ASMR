@@ -1,4 +1,4 @@
-package com.backend.Entity;
+package com.backend.entity;
 
 import lombok.*;
 
@@ -8,7 +8,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Entity
 @Table(name = "HEART")
-@IdClass(HeartPK.class)
+@IdClass(foreignPK.class)
 public class Heart {
     @Id
     @ManyToOne(fetch = FetchType.LAZY)

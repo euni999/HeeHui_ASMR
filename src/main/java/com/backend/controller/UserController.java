@@ -1,25 +1,29 @@
-package com.backend.Controller;
+package com.backend.controller;
 
-import com.backend.Dto.UserDto;
-import com.backend.Entity.UserEntity;
-import com.backend.Service.UserService;
+import com.backend.dto.UserDto;
+import com.backend.service.UserService;
 import lombok.*;
-import org.apache.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
 public class UserController {
-
     @Autowired
     private final UserService userService;
 
     @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping(value = "/user", consumes = "application/json; charset=utf-8")
     public String save(@RequestBody UserDto userDto) {
-        System.out.println(userDto.toString());
-        return userService.save(userDto);
+        boolean isUser = userService.exists(userDto);
+        System.out.println("회원 유무 : " + isUser);
+        if (isUser) {
+            return "있는 회원입니다.";
+        }
+        else {
+            System.out.println("회원가입 : " + userDto.toString());
+            return userService.save(userDto);
+        }
     }
 
 }

@@ -1,10 +1,10 @@
-package com.backend.Service;
+package com.backend.service;
 
 /*
     키워드 검색
  */
 
-import com.backend.Dto.VideoDto;
+import com.backend.dto.VideoDto;
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpRequestInitializer;
@@ -31,7 +31,7 @@ public class Search {
     private static final long NUMBER_OF_VIDEOS_RETURNED = 2;
     private static final String GOOGLE_YOUTUBE_URL = "https://www.youtube.com/watch?v=";
     private static final String YOUTUBE_SEARCH_FIELDS = "items(id/kind,id/videoId,snippet/title,snippet/description,snippet/channelTitle,snippet/thumbnails/medium/url)";
-    private static final String YOUTUBE_APIKEY = "AIzaSyD0DQJxkhFey38GgXaOAw6p8nZk7KIYf4E";
+    private static final String YOUTUBE_APIKEY = "AIzaSyBmNXK-4gvjD7785WFaQVbuGCQwWErPKUA";
 
      private static YouTube youtube;
 

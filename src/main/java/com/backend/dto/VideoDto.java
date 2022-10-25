@@ -1,6 +1,6 @@
-package com.backend.Dto;
+package com.backend.dto;
 
-import com.backend.Entity.Video;
+import com.backend.entity.Video;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;

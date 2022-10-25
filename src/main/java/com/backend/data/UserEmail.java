@@ -28,9 +28,4 @@ public class UserEmail {
         this.heart = heart;
     }
 
-    public UserEmail(String email, boolean heart) {
-        this.email = email;
-        this.heart = heart;
-    }
-
 }

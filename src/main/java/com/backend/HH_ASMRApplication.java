@@ -1,12 +1,9 @@
 package com.backend;
 
-import com.backend.Controller.SearchController;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-
-import java.sql.*;
 
 import static org.hibernate.tool.schema.SchemaToolingLogging.LOGGER;
 

@@ -26,14 +26,14 @@ import { useNavigate, useParams } from 'react-router-dom';
 import ApiVideoCard from '../../components/common/ApiVideoCard';
 import axios from "axios";
 import PostVideoCard from "../../components/common/PostVideoCard";
-import {ApiState} from "../../States/VideoStates";
-import {useRecoilState} from "recoil";
+import {useRecoilState, useRecoilValue} from "recoil";
+import {SearchVideoState, VideoCountState} from '../../States/VideoStates';
 
 const SearchResult = () => {
     let parameter = useParams().word;
     const navigate = useNavigate();
 
-    const [videoData, setVideoData] = useRecoilState(ApiState);
+    const [videoData, setVideoData] = useRecoilState(SearchVideoState);
     const [page, setPage] = useState(1);
     const [param, setParam] = useState(parameter);
 
@@ -47,29 +47,38 @@ const SearchResult = () => {
     };
 
     const [searchData, setSearchData] = useState([]);
-    let searchCount = 0;
+    const videoCount = useRecoilValue(VideoCountState);
+
     useEffect(() => {
+        setVideoData([]);
+
         async function fetchData() {
+
             const result = await axios.get(
                 'http://localhost:8080/search?word=' + parameter
             );
+
             // json콘솔로 찍으면 [Object object]로 보여서 바꾸기~~
             setVideoData(result.data);
             console.warn(result.data);
-            searchCount = Object.keys(result).length;
         }
         fetchData();
         console.log(videoData);
     }, []);
+    useEffect(()=>{
+
+    }, [param]);
 
     const onSearchClick = (category) => {
         navigate(`/category/${category}`);
     };
+
+
     return (
         <LayoutContainer>
             <Result>
                 <SearchResultWrapper>
-                    <SearchResultCount>{searchCount}</SearchResultCount>
+                    <SearchResultCount>{videoCount}</SearchResultCount>
                     <SearchResultText>개의 결과가 존재합니다.</SearchResultText>
                 </SearchResultWrapper>
             </Result>
@@ -86,8 +95,9 @@ const SearchResult = () => {
             </NavBar>
             <Main>
                 <PromotionSection>
-                    {/*<PostVideoCard page = {2} param={param} data={videoData} count={3}/>*/}
-                    <ApiVideoCard  color={"white"} param={param}/>
+                    <ApiVideoCard param={param}/>
+                    {/*<PostVideoCard page = {2} param={param} data={videoData} count={3} color={"white"}/>*/}
+                    {/*<PostVideoCard data={videoData}  color={"white"} param={param}/>*/}
                 </PromotionSection>
             </Main>
             <SideBar>
