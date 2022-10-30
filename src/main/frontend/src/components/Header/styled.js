@@ -15,7 +15,10 @@ export const HeaderWrapper = styled.header`
 `;
 export const TopSection = styled.div`
     width : 100%;
-    height : 9vh;
+    height : 6vh;
+    @media (max-width : 991px){
+        height : 3rem;
+    }
 `;
 export const BottomSection = styled.div`
     margin-left : 10px;
@@ -123,6 +126,9 @@ export const StylePersonalLink = styled(NavLink)`
 
   @media (max-width: 991px) {
     font-size: 0.8rem;
+  }
+  @media(min-width : 1400px){
+    margin-right : -2rem;
   }
 
 `;

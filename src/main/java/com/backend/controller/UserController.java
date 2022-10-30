@@ -18,7 +18,7 @@ public class UserController {
         boolean isUser = userService.exists(userDto);
         System.out.println("회원 유무 : " + isUser);
         if (isUser) {
-            return "있는 회원입니다.";
+            return "로그인";
         }
         else {
             System.out.println("회원가입 : " + userDto.toString());

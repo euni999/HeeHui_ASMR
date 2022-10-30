@@ -11,21 +11,21 @@ public class VideoDto {
     private Integer video_idx;
     private String category;
     private String url;
-    private String video_id;
+    private String videoId;
     private String title;
-    private String creator;
+    private String channelTitle;
     private String description;
-    private String thumbnail;
+    private String thumbnails;
 
-    public VideoDto(Integer video_idx, String category, String url, String video_id, String title, String creator, String description, String thumbnail) {
+    public VideoDto(Integer video_idx, String category, String url, String videoId, String title, String channelTitle, String description, String thumbnails) {
         this.video_idx = video_idx;
         this.category = category;
         this.url = url;
-        this.video_id = video_id;
+        this.videoId = videoId;
         this.title = title;
-        this.creator = creator;
+        this.channelTitle = channelTitle;
         this.description = description;
-        this.thumbnail = thumbnail;
+        this.thumbnails = thumbnails;
     }
 
     @Builder
@@ -33,78 +33,14 @@ public class VideoDto {
         Video video = new Video().builder()
                 .video_idx(null)
                 .category(null)
-                .video_id(video_id)
+                .videoId(videoId)
                 .url(url)
                 .title(title)
                 .description(description)
-                .creator(creator)
-                .thumbnail(thumbnail)
+                .channelTitle(channelTitle)
+                .thumbnails(thumbnails)
                 .build();
         return video;
-    }
-
-    public Integer getVideo_idx() {
-        return video_idx;
-    }
-
-    public void setVideo_idx(Integer video_idx) {
-        this.video_idx = video_idx;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public String getVideoId() {
-        return video_id;
-    }
-
-    public void setVideoId(String videoId) {
-        this.video_id = video_id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getCreator() {
-        return creator;
-    }
-
-    public void setCreator(String creator) {
-        this.creator = creator;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getThumbnail() {
-        return thumbnail;
-    }
-
-    public void setThumbnail(String thumbnail) {
-        this.thumbnail = thumbnail;
     }
 
 }

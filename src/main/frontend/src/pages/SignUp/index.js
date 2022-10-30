@@ -51,6 +51,28 @@ const SignUp = () => {
 
     const addAccount = async (e) => {
         e.preventDefault();
+
+        console.log("fddfa");
+        // 추가
+        const data = {
+            email: email,
+            password : password,
+            name: name,
+            number : number
+        };
+        const url = 'http://localhost:8080/user';
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8'
+            },
+            body: JSON.stringify(data)
+        })
+            .then(() => { });
+
+        // 추가끗
+
+
         const newUser = {
             email,
             password,

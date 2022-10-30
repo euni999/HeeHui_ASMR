@@ -6,7 +6,10 @@ import {ReactComponent as FilledHeartIcon} from '../../assets/icons/FilledHeartI
 //비디오 설명
 export const TitleWrapper = styled.div`
     margin : 0 0 0 3.5rem;
-`;
+  @media(max-width : 991px){
+    margin : 0 0 0 2.5;
+  }
+  `;
 export const VideoTitle = styled.h2`
 
   margin-top : 2rem;
@@ -15,11 +18,28 @@ export const VideoTitle = styled.h2`
   width : 85%;
     font-size : 1.9rem; 
   font-family: lee, sans-serif;
+    @media(max-width : 991px){
+  margin-left : 0rem;
+
+  }
+    @media(min-width : 1400px){
+      font-size : 2rem;
+
+  }
 `;
 export const VideoCreator = styled.p`
   font-size : 1.4rem;
   margin : 0 0 0.3rem 0.4rem;
   font-family: lee, sans-serif;
+  @media(min-width : 1400px){
+    margin-left : 5rem;
+      font-size : 1.5rem;
+
+  }
+      @media(max-width : 991px){
+margin-left : 2rem;
+
+  }
 `;
 
 //아이콘 부분
@@ -33,13 +53,21 @@ export const HeartBtn = styled(HeartIcon)`
   fill: #383838;
   cursor : pointer;
   margin-right : 5rem;
-  ${({ isLiked }) =>
-        isLiked &&
-        css`
+  ${({ isLiked }) => isLiked && 
+      css`
       fill : red;
     `}
   &:hover{
     fill : red;
+  }
+    @media(min-width : 1400px){
+    margin-right : 7rem;
+    width : 2rem;
+    height : 2rem;
+
+  }
+          @media(max-width : 991px){
+    margin-right : 2rem;
   }
   
 `;
@@ -49,40 +77,33 @@ export const LayoutContainer = styled.div`
 
   @media(max-width: 991px){
     min-height : 160vh;
-
   }
 `;
 
-export const PageBtn = styled(PageIcon)`
-  width: 1.8rem;
-  height: 1.8rem;
-  cursor : pointer;
-  ${({ isAdded }) =>
-        isAdded &&
-    css`
-      fill : #383838;
-    `}
 
-  &:hover {
-    fill : #383838;
-    
-
-  }
-  
-`;
 export const FilledHeartBtn = styled(FilledHeartIcon)`
   fill : red;
   margin-right : 5rem;
   cursor : pointer;
   width: ${props => props.size || "1.8rem"};
   height: ${props => props.size || "1.8rem"};
+      @media(min-width : 1400px){
+    margin-right : 7rem;
+    width : 2rem;
+    height : 2rem;
+
+  }
+        @media(max-width : 991px){
+    margin-right : 2rem;
+  }
+
 
 `;
 //비디오 부가 설명
 export const SubWrapper = styled.div`
-  margin : 1rem 0 0 8rem;
+  margin : 3rem 0 0 8rem;
   @media (max-width : 991px){
-    margin-left : 3rem;
+    margin-left : 4rem;
   }
 
 `;
@@ -91,6 +112,9 @@ export const VideoSubTitle = styled.p`
   margin-bottom : 0;
   font-weight: bold;
   font-family: lee, sans-serif;
+      @media(min-width : 1400px){
+    font-size : 1.8rem;
+  }
 
 `;
 export const VideoSub = styled.p`
@@ -98,6 +122,10 @@ export const VideoSub = styled.p`
   width : 87%;
   margin : 1rem 0 3rem 0.5rem;
   font-family: lee, sans-serif;
+        @media(min-width : 1400px){
+    font-size : 1.6rem;
+  }
+
 
 `;
 //비디오 출력 부분

@@ -85,8 +85,6 @@ const Detail = () => {
 
     // 댓글달기
     const addComment = () => {
-        // const now_date = new Date().toISOString().slice(0, 19).replace('T', ' ');
-
         const dataset = {
             comment : text,
             video_id : video_id,
@@ -99,10 +97,9 @@ const Detail = () => {
             },
             body : JSON.stringify(dataset),
         })
-
             .then((res) => {
                 console.log(res);
-                // return window.location.reload();
+                return window.location.reload();
             })
             .catch((e) => {
                 console.error(e);
@@ -123,6 +120,7 @@ const Detail = () => {
             }
         });
     }, []);
+    console.log(video_id);
 
     const addCommentHandler = e =>{
         e.preventDefault();
@@ -148,11 +146,7 @@ const Detail = () => {
     };
 
 
-    const [videoURL, setVideoURL] = useState(`https://www.youtube.com/embed/`);
-
-    useEffect(()=>{
-    });
-
+    const [videoURL, setVideoURL] = useState(`https://www.youtube.com/embed/${params}`);
 
 
     // 페이지 정보 DB 저장
@@ -207,7 +201,7 @@ const Detail = () => {
         <LayoutContainer>
             <TitleWrapper>
                 <VideoTitle>{location.data.title}</VideoTitle>
-                <VideoCreator>{location.data.channelTitle}</VideoCreator>
+                <VideoCreator>{location.data.creator || location.data.channelTitle}</VideoCreator>
             </TitleWrapper>
             {isLoggedIn ? (
                 <IconWrapper>

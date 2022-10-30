@@ -22,8 +22,8 @@ public interface CommentRepository extends JpaRepository<Comment, Integer> {
     Integer deleteComment(@Param("comment_idx") Integer comment_idx);
 
     // 댓글 조히
-    @Query("select c.comment_idx as comment_idx, c.user_idx.name as name, c.comment as comment_text from Comment c where c.video_idx in (select v.video_idx from Video v where v.video_id =:video_id)")
-    List<Map<String, Objects>> getComment (@Param("video_id") String video_id);
+    @Query("select c.comment_idx as comment_idx, c.user_idx.name as name, c.comment as comment_text from Comment c where c.video_idx in (select v.video_idx from Video v where v.videoId =:videoId)")
+    List<Map<String, Objects>> getComment (@Param("videoId") String videoId);
 
     // 댓글 수정
     @Transactional

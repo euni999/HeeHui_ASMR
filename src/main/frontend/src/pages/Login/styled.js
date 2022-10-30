@@ -51,6 +51,10 @@ export const LoginContainer = styled.div`
     justify-content: center;
     align-items: center;
     display: flex;
+    @media (min-width : 1400px) {
+        width : 25vw;
+        height : 30vw;
+    }
   //@media (max-width: 991px) {
   //  height :rem;
   //}

@@ -32,6 +32,7 @@ export const RegisterDiv = styled.div`
     display : flex;
     height: 75vh;
 
+
 `;
 export const RegisterContainer = styled.div`
     background : #f0f0f0;
@@ -44,6 +45,10 @@ export const RegisterContainer = styled.div`
     justify-content: center;
     align-items: center;
     display: flex;
+            @media (min-width : 1400px) {
+        width : 25vw;
+        height : 20vw;
+    }
 
 `;
 export const RegisterTitle = styled.p`

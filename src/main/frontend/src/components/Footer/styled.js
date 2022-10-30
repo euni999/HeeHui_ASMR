@@ -14,9 +14,6 @@ export const FooterStyle = styled.div`
     justify-content: flex-start;
     width : 40vw;
   margin-left : 3rem;
-
-
-
 `;
 export const StyledLink = styled(Link)`
   text-decoration: none;
@@ -32,10 +29,7 @@ export const StyledLink = styled(Link)`
     color: #5b5b5b;
     transition : all 0.2s ease-in-out;
   }
-  @media(max-width: 991px){
-    margin-left : -2rem;
 
-  }
 `;
 
 export const FooterContainer = styled.div`
@@ -76,5 +70,4 @@ export const ServiceContainer = styled.div`
 `;
 
 export const ExplainContainer = styled.div`
-
 `;

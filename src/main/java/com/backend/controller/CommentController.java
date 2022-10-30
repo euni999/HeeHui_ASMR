@@ -72,11 +72,9 @@ public class CommentController {
         Integer user_idx = userService.userIdx(comment.getEmail());
         System.out.println(user_idx);
         List<Map<String, Objects>> commentList = commentService.commentList(user_idx);
-        //List<Video> videoList =  videoService.videoData(user_idx);
         ObjectMapper mapper = new ObjectMapper();
         String result = mapper.writeValueAsString(commentList);
-        System.out.println("result : " + result);
+        System.out.println("댓글 리스트 : " + result);
         return result;
-
     }
 }

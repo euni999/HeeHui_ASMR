@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import sound from "../../assets/img/sound.jpg";
@@ -9,51 +9,52 @@ import headphone from "../../assets/img/headphone.jpg";
 import ocean from "../../assets/img/ocean.jpg";
 import atom from "../../assets/img/atom.jpg";
 import {
-    HomeWrapper,
-    CategoryContainer,
-    SliderExplain,
-    SliderTitle,
-    SliderSubtitle,
-    CategoryTitle,
-    CategoryText,
-    CategoryList,
-    SliderWrapper,
     BannerImg,
     BannerText,
     BannerTitle,
     BannerWrapper,
-    PromotionTitle,
-    PromotionSection,
+    CategoryBtn,
+    CategoryBtnContainer,
+    CategoryContainer,
+    CategoryList,
+    CategoryText,
+    CategoryTitle,
+    CollectionImg,
+    CollectionSection,
+    CollectionText,
+    CollectionTextWrapper,
+    CollectionTitle,
+    HomeWrapper,
+    HotSection,
+    MakerImg,
+    MakerImgContainer,
+    MakerSection,
+    MakerSubImg,
     PromotionContainer,
+    PromotionSection,
+    PromotionTitle,
+    SliderExplain,
+    SliderSubtitle,
+    SliderTitle,
+    SliderViewMore,
+    SliderWrapper,
+    TextWrapper,
     VideoWrapper,
     ViewMoreBtn,
     ViewMoreBtnText,
-    MakerSection,
-    MakerImg,
-    MakerSubImg,
-    MakerImgContainer,
-    CategoryBtnContainer,
-    CategoryBtn,
-    CollectionSection,
-    CollectionImg,
-    SliderViewMore,
-    HotSection,
-    TextWrapper,
-    CollectionText,
-    CollectionTextWrapper, CollectionTitle,
 } from './styled';
-import { useRecoilState } from 'recoil';
+import {useRecoilState} from 'recoil';
 import {VideoState} from "../../States/VideoStates";
 
 import PostVideoCard from "../../components/common/PostVideoCard";
-import PromotionCard from "../../components/common/PromotionCard";
 
 import SimpleSlider from "../../Utils/SimpleSlider";
 import {useNavigate} from "react-router-dom";
-import CenterSlider from "../../Utils/CenterSlider";
-import { UserNameState } from '../../States/LoginStates';
 import axios from 'axios';
-import ApiVideoCard from '../../components/common/ApiVideoCard';
+import handleScroll from "../../Utils/ScrollTop/handleScroll";
+import ScrollTop from "../../Utils/ScrollTop";
+import PromotionCard from "../../components/common/PromotionCard";
+import ApiVideoCard from "../../components/common/ApiVideoCard";
 
 const Main = () => {
     const [isViewMore, setIsViewMore] = useState(false);
@@ -61,16 +62,41 @@ const Main = () => {
     const [page, setPage] = useState(1);
     const [param, setParam] = useState('');
     const [videoData, setVideoData] = useRecoilState(VideoState);
-    const [dbVideo, setDbVideo] = useState([]);
+    const [videoData2, setVideoData2] = useState([]);
 
-    const FetchVideoData = () => {
-        fetch('http://localhost:8080/video',
-            {method:'GET',headers:{'Content-Type':'application/json'},})
-            .then(res=>res.json())
-            .then(data=> setVideoData(data))
-            .catch(error => console.error('Error:', error));
+    // async function fetchData() {
 
-    };
+    //     const result = await axios.get(
+    //         'http://localhost:8080/video'
+    //     );
+    //     //json콘솔로 찍으면 [Object object]로 보여서 바꾸기~~
+    //     setVideoData(result);
+    //     console.log(result.data);
+    //     console.log(videoData);
+    // };
+    useEffect(() => {
+        setVideoData([]);
+
+        async function fetchData() {
+            const result = await axios.get(
+                'http://localhost:8080/video'
+            );
+            setVideoData(result.data);
+            console.warn(result.data);
+        }
+        fetchData();
+        console.log(videoData);
+    }, []);
+    // const FetchData = () => {
+    //     fetch('http://localhost:8080/video',
+    //         {method:'GET',headers:{'Content-Type':'application/json'},})
+    //         .then(res=>res.json())
+    //         .then(data=> setVideoData(data))
+    //         .catch(error => console.error('Error:', error));
+    //
+    // };
+
+
     // const fetchVideoDataDB = () => {
     //     axios.get('http://localhost:3002/video',{})
     //         .then((res) => {
@@ -83,20 +109,15 @@ const Main = () => {
     //
     // };
 
-    useEffect(()=>{
-        FetchVideoData();
-        const videoList = [...videoData];
-        setVideoData(shuffle(videoList));
-        // fetchVideoDataDB();
-    }, []);
 
-    function shuffle(array) {
-        const real = [...array];
+
+    function shuffle(arrayList) {
+        const real = arrayList;
         return real.sort(() => Math.random() - 0.5);
     }
 
     const navigate = useNavigate();
-    const categoryList = ["요리", "자연", "수면", "웃음", "팅글"];
+    const categoryList = ["요리", "자연", "수면", "웃음","카페", "팅글"];
     const onCategoryClick = (param) => {
         navigate(`/category/${param}`);
     };
@@ -108,7 +129,7 @@ const Main = () => {
                 <SliderSubtitle>주제별로 나뉘어져 원하는 ASMR을 들을 수 있어요!</SliderSubtitle>
 
                 <SliderExplain onClick={()=>setIsViewMore(!isViewMore)}>View more</SliderExplain>
-                {isViewMore && <SliderViewMore>아무것도 없어요</SliderViewMore>}
+                {isViewMore && <SliderViewMore>일상적인 배경음부터 공부에 집중할 수 있는 백색소음까지!</SliderViewMore>}
 
             </SliderWrapper>
 
@@ -135,14 +156,14 @@ const Main = () => {
             <PromotionContainer>
                 <PromotionTitle>인기 급상승</PromotionTitle>
                 <HotSection>
-                    {/*<PromotionCard/>*/}
+                    <PromotionCard/>
                 </HotSection>
 
             </PromotionContainer>
             <VideoWrapper>
                 <PromotionTitle>최근 업로드</PromotionTitle>
                 <PromotionSection>
-                    {/*<ApiVideoCard page={page} count={2} order={"date"}/>*/}
+                    <ApiVideoCard page={page} count={2} order={"date"}/>
                 </PromotionSection>
                 <ViewMoreBtn>
                     <ViewMoreBtnText onClick={()=> setPage(page+1)}>{isShowMore ? '닫기' : '더보기'}</ViewMoreBtnText>
@@ -193,7 +214,7 @@ const Main = () => {
                 </CollectionTextWrapper>
 
             </CollectionSection>
-
+            <ScrollTop handleClick={handleScroll}/>
         </HomeWrapper>
     );
 };

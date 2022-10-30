@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 @RequiredArgsConstructor
 @Service
@@ -30,5 +32,13 @@ public class VideoService {
 
     public boolean exists (String video_id) {
         return videoRepository.existsVideo(video_id);
+    }
+
+    public List<Map<String, Objects>> mainVideo() {
+        return videoRepository.mainVideo();
+    }
+
+    public List<Map<String, Objects>> categoryVideo(String category) {
+        return videoRepository.categoryVideo(category);
     }
 }

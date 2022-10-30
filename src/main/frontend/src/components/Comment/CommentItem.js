@@ -53,9 +53,8 @@ const CommentItem = ({ data, video_id }) => {
     };
 
 
+    // 댓글 수정
     const update = () =>{
-        const now_date = new Date().toISOString().slice(0, 19).replace('T', ' ');
-
         const dataset = {
             comment: newText,
             comment_idx : data.comment_idx,

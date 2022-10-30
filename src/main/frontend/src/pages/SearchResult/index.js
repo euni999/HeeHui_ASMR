@@ -26,14 +26,19 @@ import { useNavigate, useParams } from 'react-router-dom';
 import ApiVideoCard from '../../components/common/ApiVideoCard';
 import axios from "axios";
 import PostVideoCard from "../../components/common/PostVideoCard";
-import {useRecoilState, useRecoilValue} from "recoil";
+import {useRecoilState, useRecoilValue, useSetRecoilState} from "recoil";
 import {SearchVideoState, VideoCountState} from '../../States/VideoStates';
+import SearchVideoCard from "../../components/common/SearchVideoCard";
 
 const SearchResult = () => {
     let parameter = useParams().word;
+    console.log(parameter);
     const navigate = useNavigate();
 
+    const setVideoCount = useSetRecoilState(VideoCountState);
+
     const [videoData, setVideoData] = useRecoilState(SearchVideoState);
+    const [videoData2, setVideoData2] = useState([]);
     const [page, setPage] = useState(1);
     const [param, setParam] = useState(parameter);
 
@@ -52,22 +57,34 @@ const SearchResult = () => {
     useEffect(() => {
         setVideoData([]);
 
-        async function fetchData() {
+        console.log("asd");
 
-            const result = await axios.get(
-                'http://localhost:8080/search?word=' + parameter
-            );
 
-            // json콘솔로 찍으면 [Object object]로 보여서 바꾸기~~
-            setVideoData(result.data);
-            console.warn(result.data);
-        }
-        fetchData();
-        console.log(videoData);
     }, []);
-    useEffect(()=>{
+    useEffect(() => {
+        setVideoData([]);
 
-    }, [param]);
+        console.log("asddsdfewf");
+
+
+        fetchData();
+
+
+
+    }, [parameter]);
+
+
+    async function fetchData() {
+        const result = await axios.get(
+            'http://localhost:8080/search?word=' + parameter
+        );
+        console.log(parameter);
+        console.log(result);
+        setVideoCount(result.data.length);
+        setVideoData(result.data);
+
+        console.warn(result.data);
+    }
 
     const onSearchClick = (category) => {
         navigate(`/category/${category}`);
@@ -95,7 +112,8 @@ const SearchResult = () => {
             </NavBar>
             <Main>
                 <PromotionSection>
-                    <ApiVideoCard param={param}/>
+                    <SearchVideoCard data={videoData} color={"white"}/>
+                    {/*<ApiVideoCard param={param} color={"white"}/>*/}
                     {/*<PostVideoCard page = {2} param={param} data={videoData} count={3} color={"white"}/>*/}
                     {/*<PostVideoCard data={videoData}  color={"white"} param={param}/>*/}
                 </PromotionSection>
@@ -103,14 +121,14 @@ const SearchResult = () => {
             <SideBar>
                 <SideBarWrapper>
                     <SideBarSearchTitle>인기 검색어</SideBarSearchTitle>
-                    <SideBarSearchItem>해리포터</SideBarSearchItem>
-                    <SideBarSearchItem>공부</SideBarSearchItem>
-                    <SideBarSearchItem>강유미</SideBarSearchItem>
+                    <SideBarSearchItem to={'/search/해리포터'}>해리포터</SideBarSearchItem>
+                    <SideBarSearchItem to={'/search/공부'}>공부</SideBarSearchItem>
+                    <SideBarSearchItem to={'/search/먹방'}>먹방</SideBarSearchItem>
                 </SideBarWrapper>
                 <SideBarRecommendWrapper>
                     <SideBarRecommendTitle>오늘의 키워드</SideBarRecommendTitle>
-                    <SideBarRecommendItem>졸업작품</SideBarRecommendItem>
-                    <SideBarRecommendItem>타이핑 소리</SideBarRecommendItem>
+                    <SideBarRecommendItem to={'/search/졸업작품'}>졸업작품</SideBarRecommendItem>
+                    <SideBarRecommendItem to={'/search/타이핑 소리'}>타이핑 소리</SideBarRecommendItem>
 
                 </SideBarRecommendWrapper>
             </SideBar>

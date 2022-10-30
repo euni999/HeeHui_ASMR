@@ -99,6 +99,13 @@ export const SearchBtn = styled(SearchIcon)`
     margin : 0;
     right : 7px;
     top : 9px;
+       @media(min-width: 1400px){
+    right : 17px;
+    top : 18px;
+    width : 1.9rem;
+    height : 1.9rem;
+  }
+
 
 `;
 

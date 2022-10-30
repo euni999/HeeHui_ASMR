@@ -1,9 +1,11 @@
 import styled from 'styled-components';
+import {Link} from "react-router-dom";
 
 export const LayoutContainer = styled.div`
   display: grid;
   width : 100vw;
   height: 100%;
+  min-height : 80vh;
   grid-template-rows: 1px 2rem 4rem 6fr;
   grid-template-columns: 1.2fr 5fr;
   grid-template-areas:
@@ -116,14 +118,21 @@ export const SideBarSearchTitle = styled.p`
   display : inline-block;
   margin : 1rem 0 0 0.8rem;
   font-family: lee, sans-serif;
+  color : black;
 `;
 
-export const SideBarSearchItem = styled.div`
+export const SideBarSearchItem = styled(Link)`
   margin : 1rem 0 0 1.4rem;
   height : 1.3rem;
   cursor : pointer;
   overflow: auto;
+  display : flex;
+  flex-direction : column;
+  text-decoration : none;
+  color : black;
   font-size: 1.3rem;
+    cursor : pointer;
+
   font-family: lee, sans-serif;
   &:hover, &:active {
     font-weight : 600;
@@ -141,15 +150,20 @@ export const SideBarRecommendTitle = styled.div`
   font-size : 1.5rem;
   font-weight : 600;
   font-family: lee, sans-serif;
+    color : black;
+
 
 `;
 
-export const SideBarRecommendItem = styled.div`
+export const SideBarRecommendItem = styled(Link)`
   margin : 1rem 0 0 1.4rem;
   cursor : pointer;
   font-family: lee, sans-serif;
   font-size: 1.3rem;
-
+  text-decoration : none;
+  color : black;
+  display : flex;
+  cursor : pointer;
   &:hover, &:active, &:active {
    font-weight : 600;
   }

@@ -25,29 +25,29 @@ public class Video {
     private String url;
 
     @Column(name = "video_id")
-    private String video_id;
+    private String videoId;
 
     @Column(name = "title")
     private String title;
 
-    @Column(name = "creator")
-    private String creator;
+    @Column(name = "channelTitle")
+    private String channelTitle;
 
     @Column(name = "description")
     private String description;
 
     @Column(name = "thumbnail")
-    private String thumbnail;
+    private String thumbnails;
 
     @Builder
-    public Video(Integer video_idx, String category, String url, String video_id, String title, String creator, String description, String thumbnail) {
+    public Video(Integer video_idx, String category, String url, String videoId, String title, String channelTitle, String description, String thumbnails) {
         this.video_idx = video_idx;
         this.category = category;
         this.url = url;
-        this.video_id = video_id;
+        this.videoId = videoId;
         this.title = title;
-        this.creator = creator;
+        this.channelTitle = channelTitle;
         this.description = description;
-        this.thumbnail = thumbnail;
+        this.thumbnails = thumbnails;
     }
 }

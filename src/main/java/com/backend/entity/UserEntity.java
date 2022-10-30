@@ -26,14 +26,18 @@ public class UserEntity {
     @Column(name = "imageUrl")
     private String imageUrl;
 
+    @Column(name = "number")
+    private String number;
+
 
     @Builder
-    public UserEntity(Integer idx, String email, String password, String name, String imageUrl) {
+    public UserEntity(Integer idx, String email, String password, String name, String imageUrl, String number) {
         this.idx = idx;
         this.email = email;
         this.password = password;
         this.name = name;
         this.imageUrl = imageUrl;
+        this.number = number;
     }
 
 

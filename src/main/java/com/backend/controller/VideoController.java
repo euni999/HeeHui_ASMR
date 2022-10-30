@@ -2,9 +2,14 @@ package com.backend.controller;
 
 import com.backend.dto.VideoDto;
 import com.backend.service.VideoService;
+import jnr.ffi.annotations.In;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 @RequiredArgsConstructor
 @RestController
@@ -26,5 +31,11 @@ public class VideoController {
         return videoService.exists(video_id);
     }
 
+    // 메인페이지 뿌리기
+    @CrossOrigin("http://localhost:3000")
+    @GetMapping(value="/video")
+    public List<Map<String, Objects>> videoVideo() {
+        return videoService.mainVideo();
+    }
 
 }

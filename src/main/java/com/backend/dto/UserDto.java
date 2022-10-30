@@ -10,6 +10,7 @@ public class UserDto {
     private String password;
     private String name;
     private String imageUrl;
+    private String number;
 
     @Override
     public String toString() {
@@ -24,6 +25,7 @@ public class UserDto {
                 .password(password)
                 .name(name)
                 .imageUrl(imageUrl)
+                .number(number)
                 .build();
         return user;
     }
