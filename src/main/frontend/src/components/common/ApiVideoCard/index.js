@@ -29,7 +29,7 @@ const ApiVideoCard = ({page, order, param, count, data, color}) => {
 
                 // `https://www.googleapis.com/youtube/v3/search?part=snippet&q=ASMR${param}&order=${order}&maxResults=4&type=video&regionCode=KR&key=Google_API_KEY`
                 // `https://www.googleapis.com/youtube/v3/search?part=snippet&q=ASMR${param}&order=${order}&maxResults=8&type=video&regionCode=KR&key=Google_API_KEY`
-                `https://www.googleapis.com/youtube/v3/search?part=snippet&q=ASMR${param}&order=${order}&maxResults=2&type=video&regionCode=KR&key=AIzaSyCPRq28ZkbXZ6_eJ3nGe9RfxLoO2Cfh7uI`
+                `https://www.googleapis.com/youtube/v3/search?part=snippet&q=ASMR${param}&order=${order}&maxResults=10&type=video&regionCode=KR&key=AIzaSyCPRq28ZkbXZ6_eJ3nGe9RfxLoO2Cfh7uI`
             )
             .then((res) => {
                 //console.log(res);

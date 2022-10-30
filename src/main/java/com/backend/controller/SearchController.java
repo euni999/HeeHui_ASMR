@@ -23,7 +23,7 @@ public class SearchController {
     public @ResponseBody
     String searchYouTube(
             @RequestParam(value="word", required=true) String search,
-            @RequestParam(value="items", required=false, defaultValue="5") String items) throws IOException {
+            @RequestParam(value="items", required=false, defaultValue="10") String items) throws IOException {
 
         System.out.println("item : " + search);
         int max = Integer.parseInt(items);

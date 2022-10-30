@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     PromotionTitle,
     PromotionSubTitle,
@@ -14,55 +14,31 @@ import {
 
 import {PromotionSection} from '../Main/styled';
 
-import {useNavigate} from "react-router-dom";
+import { useNavigate, useParams } from 'react-router-dom';
 import PostVideoCard from "../../components/common/PostVideoCard";
-import axios from "axios";
-import {useRecoilValue} from "recoil";
-import {VideoState} from "../../States/VideoStates";
-import handleScroll from "../../Utils/ScrollTop/handleScroll";
-import ScrollTop from "../../Utils/ScrollTop";
+import ScrollTop from '../../Utils/ScrollTop';
+import handleScroll from '../../Utils/ScrollTop/handleScroll';
+import { useRecoilValue } from 'recoil';
+import { VideoState } from '../../States/VideoStates';
 
 const Category = () => {
-
+    const videoData = useRecoilValue(VideoState);
+    let parameter = useParams().word;
     const [isShowMore, setIsShowMore] = useState(false);
     const navigate = useNavigate();
     const [page, setPage] = useState(1);
     const [categorySearch, setCategorySearch] = useState('');
-    const [param, setParam] = useState('');
-    const video = useRecoilValue(VideoState);
+    const [param, setParam] = useState(parameter);
 
-    console.log(video);
-    const [videoData, setVideoData] = useState('');
-    const onSearch = e => {
-        e.preventDefault();
-        if(categorySearch === ''){
-            alert("검색어를 입력해주세요.");
-        } else {
-            setParam(categorySearch);
+    // const [videoData, setVideoData] = useState('');
 
-            async function fetchData() {
-
-                const result = await axios.get(
-                    'http://localhost:8080/category?word=' + categorySearch
-                );
-
-                console.log(result);
-                // json콘솔로 찍으면 [Object object]로 보여서 바꾸기~~
-                setVideoData(result.data);
-                console.warn(result.data);
-            }
-            fetchData();
-            console.log(videoData);
-
-
-            navigate(`/category/${categorySearch}`);
-        }
-        setCategorySearch('');
-    };
     const onCategoryClick = (category) => {
         setParam(category);
         navigate(`/category/${category}`);
     };
+    useEffect(()=>{
+        setParam(parameter);
+    }, [parameter]);
     const handleChange = e => {
         setCategorySearch(e.target.value);
     };
@@ -72,12 +48,7 @@ const Category = () => {
         <CategoryContainer>
             <PromotionTitle>카테고리별 맞춤 선택</PromotionTitle>
             <PromotionSubTitle>ASMR with US!</PromotionSubTitle>
-            <SearchDiv>
-                <form onSubmit={onSearch}>
-                    <SearchInput type={"text"} value={categorySearch} placeholder={"오늘의 키워드는?"} onChange={handleChange}/>
-                    <SearchBtn type={"submit"} onClick={onSearch}/>
-                </form>
-            </SearchDiv>
+
             <CategoryWrapper>
 
                 {categoryList.map((category) => (
@@ -87,7 +58,7 @@ const Category = () => {
             </CategoryWrapper>
             <hr/>
             <PromotionSection>
-                <PostVideoCard page={page} param={param} count={12} data={video}/>
+                <PostVideoCard page={page} param={param} count={12} data={videoData}/>
 
             </PromotionSection>
             <ViewMoreBtn>

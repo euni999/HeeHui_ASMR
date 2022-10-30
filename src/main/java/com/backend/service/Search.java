@@ -28,7 +28,7 @@ public class Search {
     private static Logger log = LoggerFactory.getLogger(Search.class);
     private static final HttpTransport HTTP_TRANSPORT = new NetHttpTransport();
     private static final JsonFactory JSON_FACTORY = new JacksonFactory();
-    private static final long NUMBER_OF_VIDEOS_RETURNED = 5;
+    private static final long NUMBER_OF_VIDEOS_RETURNED = 10;
     private static final String GOOGLE_YOUTUBE_URL = "https://www.youtube.com/watch?v=";
     private static final String YOUTUBE_SEARCH_FIELDS = "items(id/kind,id/videoId,snippet/title,snippet/description,snippet/channelTitle,snippet/thumbnails/medium/url)";
     private static final String YOUTUBE_APIKEY = "AIzaSyAbrAQd01gZPPAL_q98PokNFZAVS7spYBQ";

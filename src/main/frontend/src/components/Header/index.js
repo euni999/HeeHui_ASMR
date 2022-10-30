@@ -81,7 +81,7 @@ const Header = () => {
             <BottomSection>
                 <MenuWrapper>
                     <StyledNavLink to="/category/:word">카테고리</StyledNavLink>
-                    <StyledNavLink to="/new">최근 업로드</StyledNavLink>
+                    <StyledNavLink to="/new/:word">최근 업로드</StyledNavLink>
                     <StyledNavLink to="/inquiry">문의사항</StyledNavLink>
                     <StyledNavLink to="/event">이벤트</StyledNavLink>
                 </MenuWrapper>
