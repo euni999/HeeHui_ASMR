@@ -32,7 +32,7 @@ dependencies {
 
 // https://mvnrepository.com/artifact/javax.persistence/javax.persistence-api
 	implementation group: 'javax.persistence', name: 'javax.persistence-api', version: '2.2'
-// https://mvnrepository.com/artifact/com.borjaglez/springify-repository
+	// https://mvnrepository.com/artifact/com.borjaglez/springify-repository
 	implementation group: 'com.borjaglez', name: 'springify-repository', version: '0.3.3'
 
 
@@ -60,7 +60,7 @@ dependencies {
 	compileOnly 'org.projectlombok:lombok:1.18.24'
 	annotationProcessor 'org.projectlombok:lombok:1.18.24'
 
-//	// spring security
+	// spring security
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
 	testImplementation 'org.springframework.security:spring-security-test'
