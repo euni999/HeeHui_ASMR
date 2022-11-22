@@ -16,7 +16,6 @@ public class UserDto {
     public String toString() {
         return "Dto{ " + ", " + email + ", " + ", " + name + " }";
     }
-    // Dto 객체를 Entity 객체로 변환해서 반환하는 유틸리티 메서드
 
     public UserEntity toEntity() {
         UserEntity user = new UserEntity().builder()

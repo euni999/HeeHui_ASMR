@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
-public class UserController {
+public class UserController  {
     @Autowired
     private final UserService userService;
 
